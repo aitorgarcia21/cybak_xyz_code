@@ -207,3 +207,6 @@ export const db = {
     }
   }
 }
+
+// Export direct functions for easier imports
+export const updateUserSubscription = db.subscriptions.updateUserSubscription
