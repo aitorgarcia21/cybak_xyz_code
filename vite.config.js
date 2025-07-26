@@ -19,7 +19,7 @@ export default defineConfig({
   preview: {
     host: '0.0.0.0',
     port: process.env.PORT || 4173,
-    allowedHosts: ['healthcheck.railway.app']
+    allowedHosts: ['healthcheck.railway.app', 'ludicrous-father-production.up.railway.app']
   },
   // Optimisation pour la production
   build: {
