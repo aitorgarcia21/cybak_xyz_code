@@ -19,7 +19,7 @@ import {
 import { LanguageContext } from "@/components/LanguageContext";
 
 export default function FeaturesSection() {
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
 
   const translations = {
     fr: {

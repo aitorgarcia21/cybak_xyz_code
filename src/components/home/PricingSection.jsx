@@ -6,7 +6,7 @@ import { CheckCircle, Zap, ArrowRight, Shield, CreditCard, Lock, Globe, Eye, Ale
 import { LanguageContext } from "@/components/LanguageContext";
 
 export default function PricingSection({ onStart }) {
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
 
   const translations = {
     fr: {

@@ -4,7 +4,7 @@ import { Users, Shield, Clock, TrendingUp } from "lucide-react";
 import { LanguageContext } from "@/components/LanguageContext";
 
 export default function StatsSection() {
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
 
   const translations = {
     fr: {

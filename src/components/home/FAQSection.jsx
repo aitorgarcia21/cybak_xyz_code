@@ -8,7 +8,7 @@ import { LanguageContext } from "@/components/LanguageContext";
 
 export default function FAQSection() {
   const [openItems, setOpenItems] = useState(new Set([0]));
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
 
   const translations = {
     fr: {

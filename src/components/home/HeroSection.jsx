@@ -8,7 +8,7 @@ import { LanguageContext } from "@/components/LanguageContext";
 
 export default function HeroSection({ onStart }) {
   const [typedText, setTypedText] = useState("");
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
   
   const translations = {
     fr: {
