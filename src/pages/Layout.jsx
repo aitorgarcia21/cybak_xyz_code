@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useAuth } from "@/context/AuthContext";
 import { Shield, Globe, ChevronDown, User as UserIcon, LogOut, LayoutDashboard } from "lucide-react";
@@ -13,6 +13,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LanguageContext } from '@/components/LanguageContext';
+
+// Helper function to get current page name from URL
+const getCurrentPageName = () => {
+  const pathname = window.location.pathname;
+  if (pathname === '/') return 'Index';
+  if (pathname === '/dashboard') return 'Dashboard';
+  if (pathname === '/audit') return 'Audit';
+  if (pathname === '/audit-results') return 'AuditResults';
+  if (pathname === '/login') return 'Login';
+  if (pathname === '/signup') return 'SignUp';
+  if (pathname === '/pricing') return 'PricingSignup';
+  return 'Index'; // Default fallback
+};
 
 const seoData = {
   fr: {
