@@ -2,8 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { User } from "@/api/entities";
-import { Audit } from "@/api/entities";
+import { auth, db } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -108,14 +107,16 @@ export default function AuditResults() {
       setIsLoading(true);
       try {
         // Sécurisation : 1. Vérifier que l'utilisateur est connecté
-        const currentUser = await User.me();
+        const { user: currentUser } = await auth.getCurrentUser();
+        if (!currentUser) throw new Error('Not authenticated');
+        
         const urlParams = new URLSearchParams(window.location.search);
         const auditId = urlParams.get('id');
         
         if (auditId) {
           // Sécurisation : 2. Vérifier que l'audit demandé appartient bien à l'utilisateur connecté
-          const auditList = await Audit.filter({ created_by: currentUser.email });
-          const foundAudit = auditList.find(a => a.id === auditId);
+          const { data: auditList } = await db.audits.getByUserId(currentUser.id);
+          const foundAudit = auditList?.find(a => a.id === auditId);
           if (foundAudit) {
             setAudit(foundAudit);
           } else {
