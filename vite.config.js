@@ -1,0 +1,46 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+    extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json']
+  },
+  // Configuration pour Railway
+  server: {
+    host: '0.0.0.0',
+    port: process.env.PORT || 5173
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: process.env.PORT || 4173
+  },
+  // Optimisation pour la production
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-alert-dialog', '@radix-ui/react-button', '@radix-ui/react-card'],
+          stripe: ['@stripe/stripe-js'],
+          supabase: ['@supabase/supabase-js']
+        }
+      }
+    }
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
+}) 
