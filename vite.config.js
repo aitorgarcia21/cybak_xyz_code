@@ -29,7 +29,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          ui: ['@radix-ui/react-alert-dialog', '@radix-ui/react-button', '@radix-ui/react-card'],
+          ui: ['@radix-ui/react-alert-dialog', '@radix-ui/react-dialog', '@radix-ui/react-slot'],
           stripe: ['@stripe/stripe-js'],
           supabase: ['@supabase/supabase-js']
         }
