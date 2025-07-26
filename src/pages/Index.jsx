@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useAuth } from "@/context/AuthContext";
+import Layout from "./Layout";
 import HeroSection from "../components/home/HeroSection";
 import FeaturesSection from "../components/home/FeaturesSection";
 import TestimonialsSection from "../components/home/TestimonialsSection";
@@ -48,32 +49,34 @@ export default function IndexPage() {
   }
 
   return (
-    <div className="relative overflow-hidden bg-slate-950 text-white">
-      {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10"></div>
-        <div className="absolute inset-0 opacity-20">
-          <div className="grid grid-cols-12 h-full">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div 
-                key={i} 
-                className="border-r border-cyan-500/20"
-              ></div>
-            ))}
+    <Layout>
+      <div className="relative overflow-hidden bg-slate-950 text-white">
+        {/* Animated Background */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10"></div>
+          <div className="absolute inset-0 opacity-20">
+            <div className="grid grid-cols-12 h-full">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div 
+                  key={i} 
+                  className="border-r border-cyan-500/20"
+                ></div>
+              ))}
+            </div>
           </div>
         </div>
+        
+        {/* Content on top */}
+        <div className="relative z-10">
+          <HeroSection 
+            onStart={handleStart}
+          />
+          <FeaturesSection />
+          <TestimonialsSection />
+          <PricingSection onStart={handleStart} />
+          <FAQSection />
+        </div>
       </div>
-      
-      {/* Content on top */}
-      <div className="relative z-10">
-        <HeroSection 
-          onStart={handleStart}
-        />
-        <FeaturesSection />
-        <TestimonialsSection />
-        <PricingSection onStart={handleStart} />
-        <FAQSection />
-      </div>
-    </div>
+    </Layout>
   );
 }
