@@ -47,6 +47,24 @@ export const auth = {
     return { session, error }
   },
 
+  // Subscription management
+  updateUserSubscription: async (userId, subscriptionData) => {
+    const { data, error } = await supabase
+      .from('users')
+      .update({
+        subscription_status: subscriptionData.status,
+        stripe_customer_id: subscriptionData.customer_id,
+        stripe_subscription_id: subscriptionData.subscription_id,
+        plan_type: subscriptionData.plan_type || 'monthly',
+        subscription_start: subscriptionData.subscription_start,
+        subscription_end: subscriptionData.subscription_end,
+        subscription_plan: subscriptionData.subscription_plan || 'premium'
+      })
+      .eq('id', userId)
+      .select()
+    return { data, error }
+  },
+
   // Reset password
   resetPassword: async (email) => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
