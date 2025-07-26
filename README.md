@@ -1,8 +1,13 @@
-# Base44 App
+# CYBAK - Security Scanner
 
 
-This app was created automatically by Base44.
-It's a Vite+React app that communicates with the Base44 API.
+This app was created automatically by CYBAK.
+It's a Vite+React app that communicates with the CYBAK API.
+
+## Description
+
+CYBAK is a modern web security scanner SAAS application.
+Built with Vite+React and powered by Supabase for authentication and database.
 
 ## Running the app
 
@@ -17,4 +22,4 @@ npm run dev
 npm run build
 ```
 
-For more information and support, please contact Base44 support at app@base44.com.# cybak_xyz_code
+For more information about CYBAK Security Scanner, visit our website.# cybak_xyz_code
