@@ -5,7 +5,7 @@ const LanguageContext = createContext()
 
 // Provider pour gérer la langue
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('fr') // Français par défaut
+  const [language, setLanguage] = useState('en') // English by default
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'fr' ? 'en' : 'fr')

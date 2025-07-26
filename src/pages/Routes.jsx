@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@/context/AuthContext'
+import { LanguageProvider } from '@/context/LanguageContext'
 import ProtectedRoute from '@/components/ProtectedRoute'
 
 // Pages
@@ -18,9 +19,10 @@ import Layout from './Layout'
 
 export default function AppRoutes() {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
+    <LanguageProvider>
+      <AuthProvider>
+        <Router>
+          <Routes>
           {/* Public routes */}
           <Route path="/" element={<IndexPage />} />
           <Route path="/login" element={<Login />} />
@@ -56,5 +58,6 @@ export default function AppRoutes() {
         </Routes>
       </Router>
     </AuthProvider>
+    </LanguageProvider>
   )
 }
