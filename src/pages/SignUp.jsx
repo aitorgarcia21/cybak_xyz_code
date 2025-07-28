@@ -30,28 +30,28 @@ export default function SignUp() {
   const translations = {
     fr: {
       signUp: "Créer un compte",
-      welcome: "Rejoignez CYBAK",
-      description: "Créez votre compte pour commencer vos audits de sécurité",
+      welcome: "Bienvenue sur CYBAK",
+      description: "Créez votre compte pour commencer à sécuriser vos systèmes",
       firstName: "Prénom",
-      lastName: "Nom",
-      email: "Adresse email",
+      lastName: "Nom de famille",
+      email: "Adresse e-mail",
       password: "Mot de passe",
       confirmPassword: "Confirmer le mot de passe",
       showPassword: "Afficher le mot de passe",
       hidePassword: "Masquer le mot de passe",
       createAccount: "Créer mon compte",
-      alreadyHaveAccount: "Déjà un compte ?",
+      alreadyHaveAccount: "Vous avez déjà un compte ?",
       signIn: "Se connecter",
       backToHome: "Retour à l'accueil",
-      firstNameRequired: "Le prénom est requis",
-      lastNameRequired: "Le nom est requis",
-      emailRequired: "L'email est requis",
-      passwordRequired: "Le mot de passe est requis",
+      firstNameRequired: "Le prénom est obligatoire",
+      lastNameRequired: "Le nom de famille est obligatoire",
+      emailRequired: "L'adresse e-mail est obligatoire",
+      passwordRequired: "Le mot de passe est obligatoire",
       passwordTooShort: "Le mot de passe doit contenir au moins 6 caractères",
       passwordsNotMatch: "Les mots de passe ne correspondent pas",
-      accountCreated: "Compte créé avec succès ! Vérifiez votre email pour confirmer votre compte.",
-      creating: "Création du compte...",
-      emailAlreadyExists: "Cette adresse email est déjà utilisée"
+      accountCreated: "Compte créé avec succès ! Consultez votre boîte e-mail pour confirmer votre inscription.",
+      creating: "Création en cours...",
+      emailAlreadyExists: "Cette adresse e-mail est déjà utilisée"
     },
     en: {
       signUp: "Sign up",
@@ -175,7 +175,7 @@ export default function SignUp() {
         {/* Back to home button */}
         <div className="mb-6">
           <Link 
-            to={createPageUrl('Index')}
+            to="/"
             className="inline-flex items-center text-slate-400 hover:text-cyan-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
