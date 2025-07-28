@@ -27,15 +27,15 @@ export default function HeroSection({ onStart }) {
     en: {
       secureYourWebsite: "Secure your",
       website: " website",
-      description: "Detect security vulnerabilities in under 2 minutes with our AI-powered scanner. Over 100 automated tests for maximum protection.",
-      sitesSecured: "Over 10,000 sites secured",
-      ctaButton: "Subscribe - €4.99/month for unlimited audits",
-      ctaButtonShort: "Subscribe - €4.99/month",
-      ctaSubtext: "Secure login then payment",
-      cancelAnytime: "Cancel anytime",
+      description: "Protect your US business with our AI-powered security scanner. Detect vulnerabilities in under 2 minutes with 100+ automated tests. ISO 27001 & GDPR compliant cybersecurity solution.",
+      sitesSecured: "Over 10,000 websites secured",
+      ctaButton: "Get Started - $4.99/month for unlimited security audits",
+      ctaButtonShort: "$4.99/month - Unlimited audits",
+      ctaSubtext: "Secure login then payment - Cancel anytime",
+      cancelAnytime: "Cancel anytime with no penalties",
       isoCompliant: "ISO 27001 Compliant",
       pciProcess: "PCI-DSS Process",
-      gdprCompliant: "GDPR"
+      gdprCompliant: "GDPR & CCPA Compliant"
     }
   };
 

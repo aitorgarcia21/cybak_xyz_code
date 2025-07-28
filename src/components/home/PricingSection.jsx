@@ -34,28 +34,30 @@ export default function PricingSection({ onStart }) {
       ctaButton: "S'abonner - 4,99€/mois"
     },
     en: {
-      title: "Single transparent pricing",
-      subtitle: "Enjoy unlimited access to all our analysis tools for a fixed monthly price.",
-      planName: "Premium Access",
-      planDesc: "For advanced analysis and continuous security monitoring.",
+      title: "Simple, Transparent Pricing for US Businesses",
+      subtitle: "Unlimited security audits and comprehensive vulnerability detection for a fixed monthly price. No hidden fees, cancel anytime.",
+      planName: "Premium Security Suite",
+      planDesc: "Complete website security solution with continuous monitoring and priority support for US businesses.",
       features: [
-        "Unlimited audits",
-        "Detailed PDF reports",
-        "Priority support",
-        "Advanced dashboard"
+        "Unlimited security audits",
+        "Detailed PDF & CSV reports",
+        "24/7 priority support",
+        "Advanced security dashboard",
+        "Compliance reporting (ISO 27001, GDPR, CCPA)",
+        "Vulnerability remediation guidance"
       ],
-      scansPerformed: "Security scans performed:",
+      scansPerformed: "Comprehensive security scans include:",
       scansList: [
-        "HTTPS/SSL verification",
-        "HTTP security headers",
-        "Mixed content detection",
-        "Vulnerable CMS identification",
-        "Exposed sensitive files",
-        "Directory listing",
-        "Common web ports scan",
-        "Exposed email addresses"
+        "HTTPS/SSL certificate validation",
+        "HTTP security headers analysis",
+        "Mixed content & insecure resource detection",
+        "Vulnerable CMS & plugin identification",
+        "Exposed configuration files & sensitive data",
+        "Directory listing & file exposure checks",
+        "Common web service port scanning",
+        "Email address & personal data exposure"
       ],
-      ctaButton: "Subscribe - €4.99/month"
+      ctaButton: "Get Started - $4.99/month"
     }
   };
 

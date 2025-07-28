@@ -33,14 +33,14 @@ export default function FeaturesSection() {
       step3Desc: "Recevez votre rapport détaillé avec plan d'action"
     },
     en: {
-      howItWorks: "How it works?",
-      subtitle: "3 simple steps to secure your website",
-      step1Title: "Enter your URL",
-      step1Desc: "Simply enter your website address",
-      step2Title: "Instant analysis",
-      step2Desc: "Our AI scans over 100 vulnerability points",
-      step3Title: "Interactive report",
-      step3Desc: "Receive your detailed report with action plan"
+      howItWorks: "How It Works",
+      subtitle: "3 Simple Steps to Secure Your US Business Website",
+      step1Title: "Enter Your Website URL",
+      step1Desc: "Simply enter your business website address for instant security analysis",
+      step2Title: "Comprehensive Security Scan",
+      step2Desc: "Our AI scans 100+ vulnerability points including HTTPS, headers, and exposed files",
+      step3Title: "Detailed Actionable Report",
+      step3Desc: "Get your prioritized security report with step-by-step remediation guide"
     }
   };
 

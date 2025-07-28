@@ -1,0 +1,32 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CYBAK Security Scanner",
+  "url": "https://cybak.xyz",
+  "description": "AI-powered website security scanner for US businesses. Detect vulnerabilities in under 2 minutes with 100+ automated tests. ISO 27001 & GDPR compliant.",
+  "applicationCategory": "Security Software",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": 4.99,
+    "priceCurrency": "USD",
+    "description": "Monthly subscription for unlimited security audits"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "127",
+    "bestRating": "5"
+  },
+  "featureList": [
+    "Vulnerability Detection",
+    "HTTPS/SSL Verification",
+    "Security Header Analysis",
+    "Compliance Reporting",
+    "Remediation Guidance"
+  ],
+  "softwareHelp": {
+    "@type": "CreativeWork",
+    "url": "https://cybak.xyz/help"
+  }
+}
