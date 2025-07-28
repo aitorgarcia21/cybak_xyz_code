@@ -16,7 +16,7 @@ export default function ForgotPassword() {
   const [success, setSuccess] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { resetPassword } = useAuth()
-  const { language } = useContext(LanguageContext) || { language: 'fr' }
+  const { language } = useContext(LanguageContext) || { language: 'en' }
 
   const translations = {
     fr: {

@@ -33,7 +33,7 @@ export default function AuditResults() {
   const navigate = useNavigate();
   const [audit, setAudit] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
 
   const translations = {
     fr: {

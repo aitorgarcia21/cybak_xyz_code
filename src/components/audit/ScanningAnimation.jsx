@@ -6,7 +6,7 @@ import { Shield, Zap, Eye, Lock, AlertTriangle, CheckCircle } from "lucide-react
 import { LanguageContext } from "@/components/LanguageContext";
 
 export default function ScanningAnimation({ progress, currentStep, websiteUrl }) {
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
 
   const translations = {
     fr: {

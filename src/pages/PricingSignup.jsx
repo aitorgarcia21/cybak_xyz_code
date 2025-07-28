@@ -16,7 +16,7 @@ export default function PricingSignup() {
   const [error, setError] = useState('')
   const { user } = useAuth()
   const navigate = useNavigate()
-  const { language } = useContext(LanguageContext) || { language: 'fr' }
+  const { language } = useContext(LanguageContext) || { language: 'en' }
 
   const translations = {
     fr: {

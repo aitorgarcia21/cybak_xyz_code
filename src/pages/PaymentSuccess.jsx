@@ -18,7 +18,7 @@ export default function PaymentSuccess() {
   const [error, setError] = useState('')
   const { user, refreshUser } = useAuth()
   const navigate = useNavigate()
-  const { language } = useContext(LanguageContext) || { language: 'fr' }
+  const { language } = useContext(LanguageContext) || { language: 'en' }
 
   const sessionId = searchParams.get('session_id')
 

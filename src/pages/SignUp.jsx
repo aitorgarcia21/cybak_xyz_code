@@ -25,7 +25,7 @@ export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false)
   const { signUp } = useAuth()
   const navigate = useNavigate()
-  const { language } = useContext(LanguageContext) || { language: 'fr' }
+  const { language } = useContext(LanguageContext) || { language: 'en' }
 
   const translations = {
     fr: {

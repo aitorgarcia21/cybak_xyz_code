@@ -30,7 +30,7 @@ export default function Dashboard() {
   const [isSubscriptionActive, setIsSubscriptionActive] = useState(false);
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const { language } = useContext(LanguageContext) || { language: 'fr' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
 
   const translations = {
     fr: {
