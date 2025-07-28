@@ -259,7 +259,7 @@ export default function AuditPage() {
           User.loginWithRedirect(window.location.href);
         } else {
           // Accès direct à la page sans être connecté -> redirection vers la page d'accueil
-          navigate(createPageUrl('Index'));
+          navigate('/');
         }
       }
     };

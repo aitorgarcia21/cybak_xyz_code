@@ -128,7 +128,7 @@ export default function AuditResults() {
         }
       } catch (error) {
         // Si non connecté, redirection
-        navigate(createPageUrl('Index'));
+        navigate('/');
       }
       setIsLoading(false);
     };

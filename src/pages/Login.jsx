@@ -115,7 +115,7 @@ export default function Login() {
         {/* Back to home button */}
         <div className="mb-6">
           <Link 
-            to={createPageUrl('Index')}
+            to="/"
             className="inline-flex items-center text-slate-400 hover:text-cyan-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
