@@ -137,14 +137,159 @@ export default function AuditResults() {
   }, [navigate]);
 
   const downloadPDF = () => {
-    // Simulate PDF download
+    // Generate proper PDF using HTML to Canvas conversion
     const element = document.createElement("a");
-    const file = new Blob([generatePDFContent()], { type: 'text/plain' });
+    
+    // Create a proper HTML document for PDF generation
+    const htmlContent = generateHTMLReport();
+    
+    // For now, generate as HTML file that can be printed to PDF
+    const file = new Blob([htmlContent], { type: 'text/html' });
     element.href = URL.createObjectURL(file);
-    element.download = `cybak-audit-${audit.website_url.replace(/[^a-zA-Z0-9]/g, '-')}.txt`;
+    element.download = `cybak-security-audit-${audit.website_url.replace(/[^a-zA-Z0-9]/g, '-')}.html`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    
+    // Show user instruction for PDF conversion
+    alert('Report downloaded as HTML file. To convert to PDF: Open the file in your browser and use Print > Save as PDF');
+  };
+
+  const generateHTMLReport = () => {
+    if (!audit) return "";
+    
+    return `
+<!DOCTYPE html>
+<html lang="${language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBAK Security Audit Report - ${audit.website_url}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .header {
+            background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #0ea5e9;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .metric {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 15px 20px;
+            margin: 10px 10px 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #0ea5e9;
+        }
+        .critical { border-left-color: #ef4444; }
+        .major { border-left-color: #f59e0b; }
+        .minor { border-left-color: #10b981; }
+        .recommendation {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 30px;
+        }
+        @media print {
+            body { background: white; }
+            .section { box-shadow: none; border: 1px solid #e2e8f0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">CYBAK</div>
+        <h1>${t.securityAuditReport || 'Security Audit Report'}</h1>
+        <div><strong>${t.website || 'Website'}:</strong> ${audit.website_url}</div>
+        <div><strong>${t.analysisDate || 'Analysis Date'}:</strong> ${format(new Date(audit.created_date), "dd/MM/yyyy à HH:mm")}</div>
+        <div class="score">${audit.security_score}/100</div>
+    </div>
+
+    <div class="section">
+        <h2>${t.executiveSummary || 'Executive Summary'}</h2>
+        <div class="metric critical">
+            <strong>${t.criticalIssues || 'Critical Issues'}:</strong> ${audit.critical_issues || 0}
+        </div>
+        <div class="metric major">
+            <strong>${t.majorIssues || 'Major Issues'}:</strong> ${audit.major_issues || 0}
+        </div>
+        <div class="metric minor">
+            <strong>${t.minorIssues || 'Minor Issues'}:</strong> ${audit.minor_issues || 0}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>${t.analysisDetails || 'Analysis Details'}</h2>
+        <p><strong>${t.scanType || 'Scan Type'}:</strong> ${audit.scan_type || 'Complete Analysis'}</p>
+        <p><strong>${t.scanDuration || 'Scan Duration'}:</strong> ${audit.scan_duration || 'Not specified'}</p>
+        <p><strong>${t.testsPerformed || 'Tests Performed'}:</strong> ${audit.scan_details?.tests_performed || 'Not specified'}</p>
+        <p><strong>${t.sslGrade || 'SSL/TLS Grade'}:</strong> ${audit.scan_details?.ssl_grade || 'Not evaluated'}</p>
+    </div>
+
+    ${audit.scan_details?.recommendations && audit.scan_details.recommendations.length > 0 ? `
+    <div class="section">
+        <h2>${t.priorityRecommendations || 'Priority Recommendations'}</h2>
+        ${audit.scan_details.recommendations.map((rec, i) => `
+        <div class="recommendation">
+            <strong>${i + 1}.</strong> ${rec}
+        </div>`).join('')}
+    </div>` : ''}
+
+    ${audit.scan_details?.security_headers && audit.scan_details.security_headers.length > 0 ? `
+    <div class="section">
+        <h2>${t.securityHeaders || 'Security Headers'}</h2>
+        <p>${audit.scan_details.security_headers.join(', ')}</p>
+    </div>` : ''}
+
+    <div class="footer">
+        <p><strong>Report generated by CYBAK - Cybersecurity Experts</strong></p>
+        <p>For more information: <a href="https://cybak.xyz">https://cybak.xyz</a></p>
+        <p><em>This report was generated on ${new Date().toLocaleString()}</em></p>
+    </div>
+</body>
+</html>
+    `;
   };
 
   const generatePDFContent = () => {
@@ -152,7 +297,6 @@ export default function AuditResults() {
     return `
 CYBAK - RAPPORT D'AUDIT DE SÉCURITÉ
 ====================================
-
 Site web analysé: ${audit.website_url}
 Date d'analyse: ${format(new Date(audit.created_date), "dd/MM/yyyy à HH:mm")}
 Score de sécurité: ${audit.security_score}/100
