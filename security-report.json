@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-08-12T18:14:18.884Z",
+  "site": "https://cybak.xyz",
+  "vulnerabilities": [
+    {
+      "type": "Exposed Secret",
+      "file": "src/lib/supabase.js",
+      "secretType": "JWT Token"
+    },
+    {
+      "type": "Exposed Secret",
+      "file": "src/lib/supabase.js",
+      "secretType": "Generic API Key (40 chars)"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "Security Headers",
+      "missing": [
+        "HSTS",
+        "X-Content-Type-Options",
+        "X-Frame-Options",
+        "X-XSS-Protection",
+        "Content-Security-Policy"
+      ],
+      "description": "Des en-têtes de sécurité importants sont manquants"
+    },
+    {
+      "type": "XSS Risk",
+      "risks": [
+        {
+          "file": "src/components/ui/chart.jsx",
+          "risk": "dangerouslySetInnerHTML"
+        },
+        {
+          "file": "src/pages/Layout.jsx",
+          "risk": "innerHTML direct assignment"
+        }
+      ],
+      "description": "Utilisation de méthodes potentiellement dangereuses"
+    }
+  ],
+  "passed": [
+    "CORS Configuration",
+    "Authentication Provider",
+    "HTTPS/SSL",
+    "Webhook Validation"
+  ],
+  "score": 51
+}

@@ -4,6 +4,7 @@ const cors = require('cors')
 const path = require('path')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const { createClient } = require('@supabase/supabase-js')
+const { securityHeaders, authRateLimiter, stripeRateLimiter, helmet } = require('./middleware/security')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -14,7 +15,14 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
-// Middleware
+// Middleware de sécurité
+app.use(helmet({
+  contentSecurityPolicy: false, // On utilise notre propre CSP
+  crossOriginEmbedderPolicy: false
+}))
+app.use(securityHeaders)
+
+// CORS configuration
 app.use(cors({
   origin: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:5173'],
   credentials: true
@@ -30,8 +38,8 @@ app.use(express.static(path.join(__dirname, 'dist')))
 // ROUTES API STRIPE
 // ===========================================
 
-// Créer une session de paiement Stripe
-app.post('/api/create-checkout-session', async (req, res) => {
+// Créer une session de paiement Stripe (avec rate limiting)
+app.post('/api/create-checkout-session', stripeRateLimiter, async (req, res) => {
   try {
     const { priceId, userEmail, userId, successUrl, cancelUrl } = req.body
 
@@ -128,8 +136,8 @@ app.get('/api/check-payment-status', async (req, res) => {
   }
 })
 
-// Créer un portail client Stripe
-app.post('/api/create-customer-portal', async (req, res) => {
+// Créer un portail client Stripe (avec rate limiting)
+app.post('/api/create-customer-portal', stripeRateLimiter, async (req, res) => {
   try {
     const { customerId, returnUrl } = req.body
 
