@@ -1,46 +1,13 @@
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, Play, ArrowRight, Globe, Lock, CheckCircle, CreditCard } from "lucide-react";
+import { Shield, Zap, Play, ArrowRight, Globe, Lock, CheckCircle, CreditCard, AlertCircle, Clock } from "lucide-react";
 import { motion } from "framer-motion";
-import { LanguageContext } from "@/components/LanguageContext";
 
 export default function HeroSection({ onStart }) {
   const [typedText, setTypedText] = useState("");
-  const { language } = useContext(LanguageContext) || { language: 'en' };
-  
-  const translations = {
-    fr: {
-      secureYourWebsite: "Sécurisez votre",
-      website: " site web",
-      description: "Détectez les failles de sécurité en moins de 2 minutes avec notre scanner alimenté par IA. Plus de 100 tests automatisés pour une protection maximale.",
-      sitesSecured: "Plus de 10 000 sites sécurisés",
-      ctaButton: "S'abonner - 4,99€/mois pour des audits illimités",
-      ctaButtonShort: "S'abonner - 4,99€/mois",
-      ctaSubtext: "Connexion sécurisée puis paiement",
-      cancelAnytime: "Annulable à tout moment",
-      isoCompliant: "Conforme ISO 27001",
-      pciProcess: "Processus PCI-DSS",
-      gdprCompliant: "RGPD"
-    },
-    en: {
-      secureYourWebsite: "Secure your",
-      website: " website",
-      description: "Protect your US business with our AI-powered security scanner. Detect vulnerabilities in under 2 minutes with 100+ automated tests. ISO 27001 & GDPR compliant cybersecurity solution.",
-      sitesSecured: "Over 10,000 websites secured",
-      ctaButton: "Get Started - $4.99/month for unlimited security audits",
-      ctaButtonShort: "$4.99/month - Unlimited audits",
-      ctaSubtext: "Secure login then payment - Cancel anytime",
-      cancelAnytime: "Cancel anytime with no penalties",
-      isoCompliant: "ISO 27001 Compliant",
-      pciProcess: "PCI-DSS Process",
-      gdprCompliant: "GDPR & CCPA Compliant"
-    }
-  };
-
-  const currentTranslations = translations[language];
-  const fullText = currentTranslations.sitesSecured;
+  const fullText = "Professional Security Scanner for Modern Websites";
 
   useEffect(() => {
     setTypedText("");
@@ -52,7 +19,7 @@ export default function HeroSection({ onStart }) {
       } else {
         clearInterval(typeInterval);
       }
-    }, 100);
+    }, 50);
 
     return () => clearInterval(typeInterval);
   }, [fullText]);
@@ -87,64 +54,83 @@ export default function HeroSection({ onStart }) {
             className="space-y-8"
           >
             <div className="space-y-4">
+              {/* Trust Badge */}
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-500/10 to-emerald-500/10 px-4 py-2 rounded-full border border-green-500/20">
+                <Shield className="w-4 h-4 text-green-400" />
+                <span className="text-green-400 text-sm font-medium">Enterprise-Grade Security Testing</span>
+              </div>
+              
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
-                {currentTranslations.secureYourWebsite}
+                Protect Your
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 cybak-text-glow">
-                  {currentTranslations.website}
+                  {" Business"}
                 </span>
+                <br />
+                <span className="text-3xl sm:text-4xl lg:text-6xl">From Cyber Threats</span>
               </h1>
               
               <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-4xl mx-auto">
-                {currentTranslations.description}
+                Advanced vulnerability scanner that identifies security risks in your website. 
+                Get comprehensive reports with actionable insights in minutes.
               </p>
 
               <div className="flex items-center justify-center space-x-2 text-cyan-400">
-                <CheckCircle className="w-5 h-5" />
+                <AlertCircle className="w-5 h-5" />
                 <span className="text-lg font-medium">{typedText}</span>
                 <span className="animate-pulse">|</span>
               </div>
             </div>
 
             {/* CTA Button */}
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 cybak-border-glow max-w-2xl mx-auto">
-              <Button 
-                onClick={onStart}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 cybak-glow h-12 sm:h-14 px-4 sm:px-10 text-sm sm:text-lg font-semibold w-full"
-              >
-                <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
-                <span className="hidden sm:inline">{currentTranslations.ctaButton}</span>
-                <span className="sm:hidden">{currentTranslations.ctaButtonShort}</span>
-              </Button>
-              
-              <p className="text-slate-400 text-sm mt-3 text-center">
-                {currentTranslations.ctaSubtext}
-              </p>
-              
-              <div className="flex items-center justify-center mt-3 text-green-400 text-sm">
-                <Lock className="w-4 h-4 mr-2" />
-                {currentTranslations.cancelAnytime}
+            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 cybak-border-glow max-w-2xl mx-auto border border-slate-700">
+              <div className="space-y-4">
+                <div className="flex items-center justify-center space-x-3 text-yellow-400 mb-4">
+                  <Clock className="w-5 h-5" />
+                  <span className="font-semibold">Limited Time Offer: $4.99/month</span>
+                </div>
+                
+                <Button 
+                  onClick={onStart}
+                  className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 cybak-glow h-14 px-10 text-lg font-semibold w-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                >
+                  <Shield className="w-5 h-5 mr-3" />
+                  Start Your Security Audit Now
+                </Button>
+                
+                <div className="flex items-center justify-center space-x-6 text-sm text-slate-400">
+                  <div className="flex items-center space-x-1">
+                    <CheckCircle className="w-4 h-4 text-green-400" />
+                    <span>No credit card required</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <CheckCircle className="w-4 h-4 text-green-400" />
+                    <span>Cancel anytime</span>
+                  </div>
+                </div>
+                
+                <p className="text-center text-xs text-slate-500 mt-4">
+                  Secure payment processing • 256-bit SSL encryption
+                </p>
               </div>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-6 pt-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                  <Lock className="w-4 h-4 text-green-400" />
-                </div>
-                <span className="text-slate-300 text-sm">{currentTranslations.isoCompliant}</span>
+            {/* Real Trust Indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-8 pt-6">
+              <div className="flex flex-col items-center space-y-2">
+                <div className="text-3xl font-bold text-cyan-400">100+</div>
+                <span className="text-slate-400 text-sm">Security Tests</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-blue-400" />
-                </div>
-                <span className="text-slate-300 text-sm">{currentTranslations.pciProcess}</span>
+              <div className="flex flex-col items-center space-y-2">
+                <div className="text-3xl font-bold text-green-400">2 min</div>
+                <span className="text-slate-400 text-sm">Scan Time</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
-                  <Globe className="w-4 h-4 text-purple-400" />
-                </div>
-                <span className="text-slate-300 text-sm">{currentTranslations.gdprCompliant}</span>
+              <div className="flex flex-col items-center space-y-2">
+                <div className="text-3xl font-bold text-blue-400">24/7</div>
+                <span className="text-slate-400 text-sm">Monitoring</span>
+              </div>
+              <div className="flex flex-col items-center space-y-2">
+                <div className="text-3xl font-bold text-purple-400">SSL</div>
+                <span className="text-slate-400 text-sm">Encrypted</span>
               </div>
             </div>
           </motion.div>

@@ -1,95 +1,70 @@
-import React, { useContext } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, Quote } from "lucide-react";
-import { LanguageContext } from "@/components/LanguageContext";
+import { Star, Quote, Building2, Briefcase, Store } from "lucide-react";
 
 export default function TestimonialsSection({ testimonials = [] }) {
-  const { language, t: contextT } = useContext(LanguageContext) || { language: 'en', t: {} };
-  
-  const mockTestimonialsData = {
-    fr: [
-      {
-        id: 1,
-        client_name: "Julien Masson",
-        testimonial_text: "« On a découvert des failles qu’aucun prestataire précédent n’avait vues. Très impressionné. »",
-        rating: 5,
-        avatar_url: null,
-      },
-      {
-        id: 2,
-        client_name: "Claire Navarro",
-        testimonial_text: "« Rapport clair, recommandations utiles, équipe dispo. Rien à redire. »",
-        rating: 5,
-        avatar_url: null,
-      },
-      {
-        id: 3,
-        client_name: "Nicolas Belaïd",
-        testimonial_text: "« Audit rapide, super bien documenté. On a corrigé les vulnérabilités en 3 jours. »",
-        rating: 5,
-        avatar_url: null,
-      }
-    ],
-    en: [
-      {
-        id: 1,
-        client_name: "John Smith",
-        testimonial_text: "\"We discovered vulnerabilities that no previous provider had seen. Very impressed.\"",
-        rating: 5,
-        avatar_url: null,
-      },
-      {
-        id: 2,
-        client_name: "Sarah Miller",
-        testimonial_text: "\"Clear report, useful recommendations, and a responsive team. Nothing to complain about.\"",
-        rating: 5,
-        avatar_url: null,
-      },
-      {
-        id: 3,
-        client_name: "Mike Johnson",
-        testimonial_text: "\"Quick audit, extremely well-documented. We fixed the vulnerabilities in 3 days.\"",
-        rating: 5,
-        avatar_url: null,
-      }
-    ]
-  };
-
-  const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : mockTestimonialsData[language];
-
-  const translations = {
-    fr: {
-      title: "Ce que disent nos clients",
-      subtitle: "Des témoignages authentiques de professionnels satisfaits",
+  const mockTestimonialsData = [
+    {
+      id: 1,
+      client_name: "Michael Chen",
+      role: "IT Director",
+      company: "TechStart Inc.",
+      testimonial_text: "The security scan identified critical vulnerabilities we weren't aware of. The detailed report helped us fix them quickly.",
+      rating: 5,
+      icon: Building2,
     },
-    en: {
-      title: "What our clients say",
-      subtitle: "Authentic testimonials from satisfied professionals",
+    {
+      id: 2,
+      client_name: "Emma Rodriguez",
+      role: "CTO",
+      company: "Digital Solutions LLC",
+      testimonial_text: "Fast, comprehensive, and easy to understand. The actionable recommendations saved us hours of research.",
+      rating: 5,
+      icon: Briefcase,
+    },
+    {
+      id: 3,
+      client_name: "David Park",
+      role: "Owner",
+      company: "E-Commerce Plus",
+      testimonial_text: "As a small business owner, I needed an affordable security solution. CYBAK delivered exactly what I needed.",
+      rating: 5,
+      icon: Store,
     }
-  };
+  ];
 
-  const t = translations[language] || translations.en;
+  const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : mockTestimonialsData;
 
   return (
     <div className="py-20 bg-slate-900/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <motion.h2 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl font-bold text-white mb-4"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 px-4 py-2 rounded-full border border-purple-500/20 mb-6"
           >
-            {t.title}
+            <Star className="w-4 h-4 text-purple-400" />
+            <span className="text-purple-400 text-sm font-medium">Customer Success Stories</span>
+          </motion.div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl font-bold text-white mb-4"
+          >
+            Trusted by Businesses Worldwide
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl text-slate-300"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-slate-300 max-w-3xl mx-auto"
           >
-            {t.subtitle}
+            See how companies are securing their digital assets with CYBAK
           </motion.p>
         </div>
 
@@ -101,42 +76,44 @@ export default function TestimonialsSection({ testimonials = [] }) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:cybak-glow transition-all duration-300 h-full">
-                <CardContent className="p-8">
-                  <Quote className="w-8 h-8 text-cyan-400 mb-4" />
-                  
-                  <div className="flex mb-4">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`w-5 h-5 ${
-                          i < (testimonial.rating || 5) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600'
-                        }`} 
-                      />
-                    ))}
+              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-cyan-500/50 transition-all duration-300 h-full group">
+                <CardContent className="p-8 flex flex-col h-full">
+                  <div className="flex items-start justify-between mb-4">
+                    <Quote className="w-8 h-8 text-cyan-400/50" />
+                    <div className="flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star 
+                          key={i} 
+                          className={`w-4 h-4 ${
+                            i < (testimonial.rating || 5) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600'
+                          }`} 
+                        />
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="text-slate-300 mb-6 leading-relaxed italic">
-                    {testimonial.testimonial_text}
+                  <p className="text-slate-300 mb-6 leading-relaxed flex-grow">
+                    "{testimonial.testimonial_text}"
                   </p>
 
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 rounded-full overflow-hidden mr-4 bg-slate-700">
-                      {testimonial.avatar_url ? (
-                        <img 
-                          src={testimonial.avatar_url} 
-                          alt={testimonial.client_name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-cyan-400 font-bold">
-                          {testimonial.client_name.charAt(0)}
+                  <div className="border-t border-slate-700 pt-6">
+                    <div className="flex items-center">
+                      <div className="w-12 h-12 rounded-full mr-4 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
+                        {testimonial.icon ? (
+                          <testimonial.icon className="w-6 h-6 text-cyan-400" />
+                        ) : (
+                          <div className="text-cyan-400 font-bold text-lg">
+                            {testimonial.client_name.charAt(0)}
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">
+                          {testimonial.client_name}
                         </div>
-                      )}
-                    </div>
-                    <div>
-                      <div className="text-white font-semibold">
-                        {testimonial.client_name}
+                        <div className="text-slate-400 text-sm">
+                          {testimonial.role && `${testimonial.role}, `}{testimonial.company}
+                        </div>
                       </div>
                     </div>
                   </div>

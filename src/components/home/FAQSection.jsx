@@ -1,95 +1,47 @@
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { LanguageContext } from "@/components/LanguageContext";
+import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 
 export default function FAQSection() {
   const [openItems, setOpenItems] = useState(new Set([0]));
-  const { language } = useContext(LanguageContext) || { language: 'en' };
 
-  const translations = {
-    fr: {
-      title: "Questions fréquentes",
-      subtitle: "Trouvez rapidement les réponses à vos questions",
-      faqs: [
-        {
-          question: "Mes données sont-elles en sécurité lors de l'audit ?",
-          answer: "Absolument. Nos processus s'alignent sur les exigences d'ISO 27001 et nous suivons le référentiel PCI-DSS. Nous ne stockons aucune donnée sensible et tous nos scans sont effectués de manière éthique et légale. Vos informations sont chiffrées en transit et au repos."
-        },
-        {
-          question: "L'audit CYBAK est-il légal ?",
-          answer: "Oui, nos audits respectent strictement les lois en vigueur. Nous effectuons uniquement des tests passifs et conformes aux standards éthiques. Nous recommandons de scanner uniquement les sites dont vous êtes propriétaire ou avez l'autorisation."
-        },
-        {
-          question: "Que se passe-t-il si des failles critiques sont trouvées ?",
-          answer: "Vous recevrez immédiatement un rapport détaillé avec la classification des failles (critiques, majeures, mineures) et un plan d'action prioritaire. Notre équipe support peut vous accompagner dans la résolution si nécessaire."
-        },
-        {
-          question: "CYBAK peut-il auditer tous types de sites web ?",
-          answer: "CYBAK analyse la plupart des technologies web : WordPress, Drupal, e-commerce, applications SaaS, APIs REST, etc. Nos 100+ tests couvrent les vulnérabilités OWASP Top 10 et bien plus."
-        },
-        {
-          question: "Quelle est la différence avec les autres scanners gratuits ?",
-          answer: "CYBAK utilise une IA propriétaire qui analyse plus de 100 vecteurs d'attaque, là où les outils gratuits se limitent à 10-20 tests basiques. De plus, nous fournissons des rapports détaillés avec recommandations personnalisées."
-        },
-        {
-          question: "Le support technique est-il inclus ?",
-          answer: "Oui ! Chaque plan inclut un support par email. Les clients Pro et Enterprise bénéficient d'un support prioritaire et téléphonique. Notre équipe d'experts répond sous 2h en moyenne."
-        },
-        {
-          question: "Puis-je annuler mon abonnement à tout moment ?",
-          answer: "Absolument. Aucun engagement, vous pouvez annuler votre abonnement à tout moment depuis votre tableau de bord. Nous appliquons également une garantie satisfait ou remboursé de 30 jours."
-        },
-        {
-          question: "CYBAK est-il conforme au RGPD ?",
-          answer: "Oui, CYBAK est 100% conforme au RGPD. Nous sommes hébergés en Europe, ne collectons que les données nécessaires et vous gardez le contrôle total sur vos informations avec possibilité de suppression à tout moment."
-        }
-      ]
+  const faqs = [
+    {
+      question: "Is my data secure during the security scan?",
+      answer: "Yes, absolutely. We perform only passive, read-only scans that don't modify or store any of your data. All communications are encrypted using industry-standard SSL/TLS protocols. We never store sensitive information from your website."
     },
-    en: {
-      title: "Frequently Asked Questions",
-      subtitle: "Find answers to your questions quickly",
-      faqs: [
-        {
-          question: "Are my data secure during the audit?",
-          answer: "Absolutely. Our processes align with ISO 27001 requirements and we follow PCI-DSS standards. We don't store any sensitive data and all our scans are performed ethically and legally. Your information is encrypted in transit and at rest."
-        },
-        {
-          question: "Is CYBAK audit legal?",
-          answer: "Yes, our audits strictly comply with applicable laws. We only perform passive tests that conform to ethical standards. We recommend scanning only websites you own or have authorization for."
-        },
-        {
-          question: "What happens if critical vulnerabilities are found?",
-          answer: "You'll immediately receive a detailed report with vulnerability classification (critical, major, minor) and a priority action plan. Our support team can assist you with remediation if needed."
-        },
-        {
-          question: "Can CYBAK audit all types of websites?",
-          answer: "CYBAK analyzes most web technologies: WordPress, Drupal, e-commerce, SaaS applications, REST APIs, etc. Our 100+ tests cover OWASP Top 10 vulnerabilities and much more."
-        },
-        {
-          question: "What's the difference with other free scanners?",
-          answer: "CYBAK uses proprietary AI that analyzes over 100 attack vectors, while free tools are limited to 10-20 basic tests. Additionally, we provide detailed reports with personalized recommendations."
-        },
-        {
-          question: "Is technical support included?",
-          answer: "Yes! Every plan includes email support. Pro and Enterprise customers benefit from priority and phone support. Our expert team responds within 2 hours on average."
-        },
-        {
-          question: "Can I cancel my subscription anytime?",
-          answer: "Absolutely. No commitment, you can cancel your subscription anytime from your dashboard. We also offer a 30-day money-back guarantee."
-        },
-        {
-          question: "Is CYBAK GDPR compliant?",
-          answer: "Yes, CYBAK is 100% GDPR compliant. We're hosted in Europe, collect only necessary data, and you maintain full control over your information with deletion possible at any time."
-        }
-      ]
+    {
+      question: "Is the CYBAK security scan legal?",
+      answer: "Yes, our scans are completely legal as they only perform passive analysis similar to what search engines do. However, we recommend scanning only websites you own or have explicit permission to test. Our scans comply with ethical security testing standards."
+    },
+    {
+      question: "What happens if vulnerabilities are found?",
+      answer: "You'll receive a detailed report categorizing issues by severity (critical, high, medium, low). Each vulnerability includes a clear explanation, potential impact, and step-by-step remediation guidance. Our support team is available to help you understand and address the findings."
+    },
+    {
+      question: "What types of websites can CYBAK scan?",
+      answer: "CYBAK can analyze most web technologies including WordPress, Shopify, custom applications, REST APIs, and more. Our scanner performs over 100 security checks covering common vulnerabilities, misconfigurations, and security best practices."
+    },
+    {
+      question: "How is CYBAK different from free security scanners?",
+      answer: "While free tools typically run 10-20 basic checks, CYBAK performs 100+ comprehensive tests. We provide detailed, actionable reports with prioritized fixes, continuous monitoring options, and professional support to help you implement security improvements."
+    },
+    {
+      question: "What kind of support is included?",
+      answer: "All plans include email support with typical response times under 24 hours. We help you understand scan results, prioritize fixes, and provide guidance on security best practices. Our team is here to ensure you can effectively improve your website's security."
+    },
+    {
+      question: "Can I cancel my subscription anytime?",
+      answer: "Yes, you can cancel your subscription at any time directly from your dashboard. There are no long-term contracts or cancellation fees. We also offer a 7-day free trial so you can test our service risk-free."
+    },
+    {
+      question: "How do you handle privacy and data protection?",
+      answer: "We take privacy seriously. We only collect minimal data necessary for the service, never sell your information, and you can request data deletion at any time. Our systems use encryption and follow security best practices to protect your information."
     }
-  };
-
-  const t = translations[language] || translations.fr;
+  ];
 
   const toggleItem = (index) => {
     const newOpenItems = new Set(openItems);
@@ -105,33 +57,43 @@ export default function FAQSection() {
     <div className="py-20 bg-slate-900/30">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <motion.h2 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl font-bold text-white mb-4"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-4 py-2 rounded-full border border-indigo-500/20 mb-6"
           >
-            {t.title}
+            <HelpCircle className="w-4 h-4 text-indigo-400" />
+            <span className="text-indigo-400 text-sm font-medium">Got Questions? We've Got Answers</span>
+          </motion.div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl font-bold text-white mb-4"
+          >
+            Frequently Asked Questions
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl text-slate-300"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-slate-300 max-w-2xl mx-auto"
           >
-            {t.subtitle}
+            Everything you need to know about securing your website with CYBAK
           </motion.p>
         </div>
 
         <div className="space-y-4">
-          {t.faqs.map((faq, index) => (
+          {faqs.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:cybak-glow transition-all duration-300">
+              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-cyan-500/30 transition-all duration-300 overflow-hidden">
                 <CardContent className="p-0">
                   <button
                     onClick={() => toggleItem(index)}

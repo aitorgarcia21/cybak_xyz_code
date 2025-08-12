@@ -1,8 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Configuration Supabase avec variables d'environnement pour Railway
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://weixdgectjfbdqazcjdg.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlaXhkZ2VjdGpmYmRxYXpjamRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMyOTkzMjEsImV4cCI6MjA2ODg3NTMyMX0.5qFaPPGT8420ZtcQUZXVBO7hwmdn7tgYDZpmV_r1NyI'
+// IMPORTANT: Les clés doivent être définies dans les variables d'environnement
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Variables d\'environnement Supabase manquantes. Veuillez configurer VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY')
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
