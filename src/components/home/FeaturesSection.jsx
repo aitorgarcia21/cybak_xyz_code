@@ -79,24 +79,6 @@ export default function FeaturesSection() {
       ]
     },
     {
-      icon: Lock,
-      title: language === 'fr' ? "Conformité Garantie" : "Guaranteed Compliance",
-      simpleDesc: language === 'fr' ? "Vérification automatique des standards de sécurité" : "Automatic verification of security standards",
-      techDesc: language === 'fr' ? "Audit de conformité RGPD, SOC 2, ISO 27001, PCI DSS avec génération de rapports de certification." : "GDPR, SOC 2, ISO 27001, PCI DSS compliance audit with certification report generation.",
-      color: "from-indigo-500 to-purple-500",
-      details: language === 'fr' ? [
-        "RGPD/GDPR compliance",
-        "Standards ISO 27001",
-        "Audit PCI DSS",
-        "Rapports de certification"
-      ] : [
-        "GDPR/RGPD compliance",
-        "ISO 27001 standards",
-        "PCI DSS audit",
-        "Certification reports"
-      ]
-    },
-    {
       icon: Zap,
       title: language === 'fr' ? "Ultra Rapide" : "Ultra Fast",
       simpleDesc: language === 'fr' ? "Résultats en quelques minutes seulement" : "Results in just a few minutes",
@@ -117,7 +99,7 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-950">
+    <section className="py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header with toggle */}
         <div className="text-center mb-16">
@@ -220,13 +202,13 @@ export default function FeaturesSection() {
         >
           <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 backdrop-blur-sm rounded-3xl p-12 border border-cyan-500/30">
             <h3 className="text-3xl font-bold text-white mb-4">
-              Prêt à sécuriser votre site ?
+              {language === 'fr' ? 'Prêt à sécuriser votre site ?' : 'Ready to secure your website?'}
             </h3>
             <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
-              Rejoignez des milliers d'entreprises qui nous font confiance pour leur sécurité
+              {language === 'fr' ? 'Rejoignez des milliers d\'entreprises qui nous font confiance pour protéger leurs données' : 'Join thousands of companies that trust us to protect their data'}
             </p>
             <button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-cyan-500/25">
-              Commencer l'essai gratuit
+              {language === 'fr' ? 'Commencer le scan gratuit' : 'Start free scan'}
             </button>
           </div>
         </motion.div>

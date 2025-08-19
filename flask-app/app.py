@@ -28,10 +28,10 @@ else:
 
 # Rate limiting
 limiter = Limiter(
-    app,
     key_func=get_remote_address,
     default_limits=["1000 per hour"]
 )
+limiter.init_app(app)
 
 # Input validation functions
 def validate_email(email):

@@ -155,20 +155,19 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
-      {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10"></div>
-        <div className="absolute inset-0 opacity-20">
-          <div className="grid grid-cols-12 h-full">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div 
-                key={i} 
-                className="border-r border-cyan-500/20"
-              ></div>
-            ))}
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4 overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-purple-500/10 animate-gradient-shift"></div>
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                           radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 40% 20%, rgba(34, 211, 238, 0.1) 0%, transparent 50%)`
+        }}></div>
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%23334155' stroke-width='0.5' opacity='0.2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
+        }}></div>
       </div>
 
       <div className="relative z-10 w-full max-w-md">
@@ -185,24 +184,35 @@ export default function SignUp() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 cybak-border-glow">
-            <CardHeader className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center cybak-glow">
-                <Shield className="w-8 h-8 text-white" />
-              </div>
-              <CardTitle className="text-2xl text-white">
-                {t.signUp}
-              </CardTitle>
-              <p className="text-slate-300">
-                {t.welcome}
-              </p>
-              <p className="text-sm text-slate-400">
-                {t.description}
-              </p>
+          <Card className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/50 shadow-2xl">
+            <CardHeader className="text-center pb-6">
+              <motion.div 
+                className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 200 }}
+              >
+                <Shield className="w-10 h-10 text-white" />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <CardTitle className="text-3xl font-bold text-white mb-2">
+                  {t.signUp}
+                </CardTitle>
+                <p className="text-xl text-slate-300 mb-2">
+                  {t.welcome}
+                </p>
+                <p className="text-slate-400">
+                  {t.description}
+                </p>
+              </motion.div>
             </CardHeader>
 
             <CardContent>
@@ -222,20 +232,25 @@ export default function SignUp() {
                   </Alert>
                 )}
 
-                <div className="grid grid-cols-2 gap-4">
+                <motion.div 
+                  className="grid grid-cols-2 gap-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
                   <div className="space-y-2">
-                    <label htmlFor="firstName" className="block text-sm font-medium text-slate-300 mb-2">
+                    <label htmlFor="firstName" className="block text-sm font-semibold text-slate-300 mb-2">
                       {t.firstName} *
                     </label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
+                    <div className="relative group">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-cyan-400 transition-colors" aria-hidden="true" />
                       <Input
                         id="firstName"
                         type="text"
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className="bg-slate-800 border-slate-700 text-white focus:border-cyan-400 focus:ring-cyan-400"
+                        className="bg-slate-900/50 border-slate-600 text-white pl-10 h-12 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200 hover:border-slate-500"
                         placeholder={t.firstName}
                         required
                         aria-required="true"
@@ -245,18 +260,18 @@ export default function SignUp() {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="lastName" className="block text-sm font-medium text-slate-300 mb-2">
+                    <label htmlFor="lastName" className="block text-sm font-semibold text-slate-300 mb-2">
                       {t.lastName} *
                     </label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
+                    <div className="relative group">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-cyan-400 transition-colors" aria-hidden="true" />
                       <Input
                         id="lastName"
                         type="text"
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        className="bg-slate-800 border-slate-700 text-white focus:border-cyan-400 focus:ring-cyan-400"
+                        className="bg-slate-900/50 border-slate-600 text-white pl-10 h-12 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200 hover:border-slate-500"
                         placeholder={t.lastName}
                         required
                         aria-required="true"
@@ -264,43 +279,53 @@ export default function SignUp() {
                       />
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                <motion.div 
+                  className="space-y-2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
+                  <label htmlFor="email" className="block text-sm font-semibold text-slate-300 mb-2">
                     {t.email} *
                   </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
+                  <div className="relative group">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-cyan-400 transition-colors" aria-hidden="true" />
                     <Input
                       id="email"
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="bg-slate-800 border-slate-700 text-white pl-10 focus:border-cyan-400 focus:ring-cyan-400"
-                      placeholder="example@email.com"
+                      className="bg-slate-900/50 border-slate-600 text-white pl-10 h-12 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200 hover:border-slate-500"
+                      placeholder="exemple@email.com"
                       required
                       aria-required="true"
                       aria-label={t.email}
                       aria-describedby="email-error"
                     />
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="space-y-2">
-                  <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+                <motion.div 
+                  className="space-y-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
+                  <label htmlFor="password" className="block text-sm font-semibold text-slate-300 mb-2">
                     {t.password} *
                   </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
+                  <div className="relative group">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-cyan-400 transition-colors" aria-hidden="true" />
                     <Input
                       id="password"
                       type={showPassword ? 'text' : 'password'}
                       name="password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="bg-slate-800 border-slate-700 text-white pl-10 pr-10 focus:border-cyan-400 focus:ring-cyan-400"
+                      className="bg-slate-900/50 border-slate-600 text-white pl-10 pr-12 h-12 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200 hover:border-slate-500"
                       placeholder="••••••••"
                       required
                       aria-required="true"
@@ -310,27 +335,32 @@ export default function SignUp() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-md p-1 transition-colors"
                       aria-label={showPassword ? t.hidePassword : t.showPassword}
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
                     </button>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="space-y-2">
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-300 mb-2">
+                <motion.div 
+                  className="space-y-2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                >
+                  <label htmlFor="confirmPassword" className="block text-sm font-semibold text-slate-300 mb-2">
                     {t.confirmPassword} *
                   </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
+                  <div className="relative group">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-cyan-400 transition-colors" aria-hidden="true" />
                     <Input
                       id="confirmPassword"
                       type={showConfirmPassword ? 'text' : 'password'}
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="bg-slate-800 border-slate-700 text-white pl-10 pr-10 focus:border-cyan-400 focus:ring-cyan-400"
+                      className="bg-slate-900/50 border-slate-600 text-white pl-10 pr-12 h-12 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200 hover:border-slate-500"
                       placeholder="••••••••"
                       required
                       aria-required="true"
@@ -340,41 +370,55 @@ export default function SignUp() {
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-md p-1 transition-colors"
                       aria-label={showConfirmPassword ? t.hidePassword : t.showPassword}
                     >
                       {showConfirmPassword ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
                     </button>
                   </div>
-                </div>
+                </motion.div>
 
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-3 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-                  aria-busy={isLoading}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
                 >
-                  {isLoading ? (
-                    <div className="flex items-center">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                      {t.creating}
-                    </div>
-                  ) : (
-                    t.createAccount
-                  )}
-                </Button>
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 hover:from-cyan-600 hover:via-blue-600 hover:to-purple-700 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-cyan-500/25 focus:outline-none focus:ring-4 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    aria-busy={isLoading}
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center justify-center">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
+                        {t.creating}
+                      </div>
+                    ) : (
+                      <span className="flex items-center justify-center">
+                        <Shield className="w-5 h-5 mr-2" />
+                        {t.createAccount}
+                      </span>
+                    )}
+                  </Button>
+                </motion.div>
 
-                <div className="text-center pt-4">
-                  <p className="text-slate-400 text-sm">
+                <motion.div 
+                  className="text-center pt-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.9 }}
+                >
+                  <p className="text-slate-400">
                     {t.alreadyHaveAccount}{' '}
                     <Link 
                       to={createPageUrl('Login')}
-                      className="text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+                      className="text-cyan-400 hover:text-cyan-300 transition-all duration-200 font-semibold hover:underline"
                     >
                       {t.signIn}
                     </Link>
                   </p>
-                </div>
+                </motion.div>
               </form>
             </CardContent>
           </Card>

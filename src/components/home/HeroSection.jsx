@@ -17,7 +17,6 @@ export default function HeroSection({ onStart }) {
       forTechnical: "For technical teams:",
       forTechnicalDesc: "OWASP Top 10, CVE detection, SSL/TLS analysis, security headers audit, vulnerability assessment with detailed remediation.",
       testFree: "Test for Free",
-      viewDemo: "View Demo",
       whyScan: "Why scan your site?",
       whyScanDesc: "93% of websites have at least one critical vulnerability. A simple scan can reveal flaws that hackers exploit daily.",
       protectNow: "Protect your data and your customers' data now."
@@ -30,7 +29,6 @@ export default function HeroSection({ onStart }) {
       forTechnical: "Pour les équipes techniques :",
       forTechnicalDesc: "OWASP Top 10, détection CVE, analyse SSL/TLS, audit des en-têtes de sécurité, évaluation des vulnérabilités avec remédiation détaillée.",
       testFree: "Tester Gratuitement",
-      viewDemo: "Voir une Démo",
       whyScan: "Pourquoi scanner votre site ?",
       whyScanDesc: "93% des sites web ont au moins une vulnérabilité critique. Un simple scan peut révéler des failles que les hackers exploitent quotidiennement.",
       protectNow: "Protégez vos données et celles de vos clients dès maintenant."
@@ -40,20 +38,7 @@ export default function HeroSection({ onStart }) {
   const t = translations[language] || translations.en;
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-950 to-slate-900 pt-20">
-      {/* Animated gradient background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-purple-500/10 animate-gradient-shift"></div>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-                           radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                           radial-gradient(circle at 40% 20%, rgba(34, 211, 238, 0.1) 0%, transparent 50%)`
-        }}></div>
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%23334155' stroke-width='0.5' opacity='0.2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
-        }}></div>
-      </div>
+    <div className="relative min-h-screen flex items-center justify-center pt-20">
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
@@ -142,7 +127,7 @@ export default function HeroSection({ onStart }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="flex justify-center mb-16"
           >
             <Button
               onClick={onStart}
@@ -151,13 +136,6 @@ export default function HeroSection({ onStart }) {
             >
               {t.testFree}
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-slate-600 text-slate-300 hover:bg-slate-800/50 hover:text-white hover:border-cyan-500/50 px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300"
-            >
-              {t.viewDemo}
             </Button>
           </motion.div>
 

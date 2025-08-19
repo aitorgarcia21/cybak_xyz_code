@@ -65,7 +65,7 @@ export default function PricingSection({ onStart }) {
   const t = translations[language] || translations.en;
 
   return (
-    <div className="py-24 bg-gradient-to-b from-slate-950 to-slate-900">
+    <div className="py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           <motion.h2 
@@ -86,9 +86,9 @@ export default function PricingSection({ onStart }) {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {/* Starter Plan */}
-              <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
+        <div className="flex justify-center max-w-6xl mx-auto">
+              {/* Starter Plan - Seul plan disponible */}
+              <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 max-w-md">
                 <div className="mb-8">
                   <h3 className="text-xl font-semibold text-white mb-2">{t.planTitle}</h3>
                   <p className="text-slate-400 text-sm">{t.planSubtitle}</p>
@@ -120,71 +120,6 @@ export default function PricingSection({ onStart }) {
                   <li className="flex items-start space-x-3">
                     <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                     <span className="text-slate-300 text-sm">{t.features.emailSupport}</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Bientôt Disponible */}
-              <div className="relative bg-slate-800/30 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 opacity-60">
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-slate-400 mb-2">{t.plans.pro}</h3>
-                  <p className="text-slate-500 text-sm">{t.plans.comingSoon}</p>
-                  <div className="mt-6">
-                    <span className="text-4xl font-bold text-slate-500">$49</span>
-                    <span className="text-slate-500">/mois</span>
-                  </div>
-                </div>
-                <Button 
-                  disabled
-                  variant="outline"
-                  className="w-full border-slate-700 text-slate-500 cursor-not-allowed mb-8"
-                >
-                  {t.soonButton}
-                </Button>
-                <ul className="space-y-3">
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-500 text-sm">{t.features.realTimeMonitoring}</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-500 text-sm">{t.features.automatedScans}</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-500 text-sm">{t.features.prioritySupport}</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Enterprise */}
-              <div className="relative bg-slate-800/30 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 opacity-60">
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-slate-400 mb-2">{t.plans.enterprise}</h3>
-                  <p className="text-slate-500 text-sm">{t.plans.comingSoon}</p>
-                  <div className="mt-6">
-                    <span className="text-4xl font-bold text-slate-500">{t.plans.custom}</span>
-                  </div>
-                </div>
-                <Button 
-                  disabled
-                  variant="outline"
-                  className="w-full border-slate-700 text-slate-500 cursor-not-allowed mb-8"
-                >
-                  {t.soonButton}
-                </Button>
-                <ul className="space-y-3">
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-500 text-sm">{t.features.customIntegrations}</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-500 text-sm">{t.features.dedicatedSupport}</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-500 text-sm">{t.features.slaGuarantee}</span>
                   </li>
                 </ul>
               </div>

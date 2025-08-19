@@ -141,14 +141,30 @@ export default function IndexPage() {
           </div>
         </div>
         
-        {/* Content with padding for header */}
-        <div className="relative z-10 pt-16">
-          <HeroSection 
-            onStart={handleStart}
-          />
-          <FeaturesSection />
-          <PricingSection onStart={handleStart} />
-          <FAQSection />
+        {/* Content with padding for header - Single continuous background */}
+        <div className="relative z-10 pt-16 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
+          {/* Global animated gradient background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-purple-500/10 animate-gradient-shift"></div>
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                               radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                               radial-gradient(circle at 40% 20%, rgba(34, 211, 238, 0.1) 0%, transparent 50%)`
+            }}></div>
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 opacity-30" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%23334155' stroke-width='0.5' opacity='0.2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
+            }}></div>
+          </div>
+          
+          <div className="relative z-10">
+            <HeroSection 
+              onStart={handleStart}
+            />
+            <FeaturesSection />
+            <PricingSection onStart={handleStart} />
+            <FAQSection />
+          </div>
         </div>
       </div>
   );
