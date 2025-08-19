@@ -17,6 +17,7 @@ import Audit from './Audit'
 import AuditResults from './AuditResults'
 import Admin from './Admin'
 import AdminLogin from './AdminLogin'
+import AdminDashboard from './AdminDashboard'
 import Index from './Index'
 import Layout from './Layout'
 
@@ -64,6 +65,11 @@ export default function AppRoutes() {
           <Route path="/admin" element={
             <AdminProtectedRoute>
               <Admin />
+            </AdminProtectedRoute>
+          } />
+          <Route path="/admin/dashboard" element={
+            <AdminProtectedRoute>
+              <AdminDashboard />
             </AdminProtectedRoute>
           } />
         </Routes>

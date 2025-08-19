@@ -6,7 +6,6 @@ import rateLimit from 'express-rate-limit'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-import { createClient } from '@supabase/supabase-js'
 import securityMiddleware from './middleware/security.js'
 import Stripe from 'stripe'
 import sqlite3 from 'sqlite3'
@@ -16,20 +15,17 @@ import jwt from 'jsonwebtoken'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_')
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 
-// Configuration Supabase côté serveur
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+// JWT Secret for authentication
+const JWT_SECRET = process.env.JWT_SECRET || 'cybak-secret-key-change-in-production'
 
 // Middleware de sécurité
 app.use(helmet({
   contentSecurityPolicy: false, // On utilise notre propre CSP
   crossOriginEmbedderPolicy: false
 }))
-app.use(securityMiddleware)
+app.use(securityMiddleware.securityHeaders)
 
 // CORS configuration
 app.use(cors({
@@ -77,7 +73,7 @@ app.post('/api/create-checkout-session', stripeRateLimiter, async (req, res) => 
         customer = await stripe.customers.create({
           email: userEmail,
           metadata: {
-            supabase_user_id: userId
+            user_id: userId
           }
         })
       }
@@ -194,16 +190,16 @@ app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (
         const userId = subscription.metadata.user_id
         
         if (userId) {
-          await supabase
-            .from('users')
-            .update({
-              subscription_status: subscription.status,
-              stripe_subscription_id: subscription.id,
-              subscription_start: new Date(subscription.current_period_start * 1000).toISOString(),
-              subscription_end: new Date(subscription.current_period_end * 1000).toISOString(),
-              updated_at: new Date().toISOString()
-            })
-            .eq('id', userId)
+          // Update user subscription status in database
+          const db = new sqlite3.Database('./cybak.db')
+          db.run(
+            'UPDATE users SET subscription_status = ?, subscription_tier = ?, stripe_subscription_id = ? WHERE id = ?',
+            [subscription.status, subscription.items.data[0]?.price.metadata.tier || 'free', subscription.id, userId],
+            (err) => {
+              if (err) console.error('Error updating subscription:', err)
+              db.close()
+            }
+          )
         }
         break
         
@@ -212,13 +208,16 @@ app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (
         const deletedUserId = deletedSubscription.metadata.user_id
         
         if (deletedUserId) {
-          await supabase
-            .from('users')
-            .update({
-              subscription_status: 'canceled',
-              updated_at: new Date().toISOString()
-            })
-            .eq('id', deletedUserId)
+          // Update user subscription status to canceled
+          const db = new sqlite3.Database('./cybak.db')
+          db.run(
+            'UPDATE users SET subscription_status = ?, subscription_tier = ?, stripe_subscription_id = ? WHERE id = ?',
+            ['canceled', 'free', null, deletedUserId],
+            (err) => {
+              if (err) console.error('Error canceling subscription:', err)
+              db.close()
+            }
+          )
         }
         break
         
@@ -423,6 +422,78 @@ app.get('/api/auth/me', authenticateToken, (req, res) => {
   })
 })
 
+// Route admin pour obtenir tous les utilisateurs
+app.get('/api/admin/users', authenticateToken, (req, res) => {
+  const db = new sqlite3.Database('./cybak.db')
+  
+  // Vérifier si l'utilisateur est admin
+  db.get('SELECT is_admin FROM users WHERE id = ?', [req.user.userId], (err, user) => {
+    if (err || !user || !user.is_admin) {
+      db.close()
+      return res.status(403).json({ error: 'Accès refusé' })
+    }
+    
+    // Récupérer tous les utilisateurs
+    db.all('SELECT id, email, first_name, last_name, created_at, is_admin FROM users ORDER BY created_at DESC', (err, users) => {
+      if (err) {
+        db.close()
+        return res.status(500).json({ error: 'Erreur serveur' })
+      }
+      
+      // Compter le nombre total d'utilisateurs
+      db.get('SELECT COUNT(*) as total FROM users', (err, count) => {
+        db.close()
+        
+        if (err) {
+          return res.status(500).json({ error: 'Erreur serveur' })
+        }
+        
+        res.json({
+          users: users.map(u => ({
+            id: u.id,
+            email: u.email,
+            firstName: u.first_name,
+            lastName: u.last_name,
+            createdAt: u.created_at,
+            isAdmin: u.is_admin
+          })),
+          total: count.total
+        })
+      })
+    })
+  })
+})
+
+// Route admin pour obtenir les statistiques
+app.get('/api/admin/stats', authenticateToken, (req, res) => {
+  const db = new sqlite3.Database('./cybak.db')
+  
+  // Vérifier si l'utilisateur est admin
+  db.get('SELECT is_admin FROM users WHERE id = ?', [req.user.userId], (err, user) => {
+    if (err || !user || !user.is_admin) {
+      db.close()
+      return res.status(403).json({ error: 'Accès refusé' })
+    }
+    
+    // Récupérer les statistiques
+    db.get(`
+      SELECT 
+        COUNT(*) as totalUsers,
+        COUNT(CASE WHEN created_at > datetime('now', '-7 days') THEN 1 END) as newUsersThisWeek,
+        COUNT(CASE WHEN created_at > datetime('now', '-30 days') THEN 1 END) as newUsersThisMonth
+      FROM users
+    `, (err, stats) => {
+      db.close()
+      
+      if (err) {
+        return res.status(500).json({ error: 'Erreur serveur' })
+      }
+      
+      res.json(stats)
+    })
+  })
+})
+
 // ===========================================
 // ROUTES FRONTEND (SPA)
 // ===========================================
@@ -455,5 +526,5 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 CYBAK serveur démarré sur le port ${PORT}`)
   console.log(`🌍 Environnement: ${process.env.NODE_ENV || 'development'}`)
   console.log(`💳 Stripe configuré: ${process.env.STRIPE_SECRET_KEY ? '✅' : '❌'}`)
-  console.log(`🗄️ Supabase configuré: ${process.env.VITE_SUPABASE_URL ? '✅' : '❌'}`)
+  console.log(`🗄️ Base de données SQLite: ✅`)
 })
