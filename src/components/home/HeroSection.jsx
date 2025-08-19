@@ -1,141 +1,173 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, Play, ArrowRight, Globe, Lock, CheckCircle, CreditCard, AlertCircle, Clock } from "lucide-react";
+import { Shield, ArrowRight, Lock, Activity, Globe2, CheckCircle, AlertTriangle, Info } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function HeroSection({ onStart }) {
-  const [typedText, setTypedText] = useState("");
-  const fullText = "Professional Security Scanner for Modern Websites";
-
-  useEffect(() => {
-    setTypedText("");
-    let currentIndex = 0;
-    const typeInterval = setInterval(() => {
-      if (currentIndex < fullText.length) {
-        setTypedText(fullText.slice(0, currentIndex + 1));
-        currentIndex++;
-      } else {
-        clearInterval(typeInterval);
-      }
-    }, 50);
-
-    return () => clearInterval(typeInterval);
-  }, [fullText]);
+  const [showTechnical, setShowTechnical] = useState(false);
 
   return (
-    <div className="pt-20"> {/* Changed: Removed 'relative' and 'overflow-hidden' from this div */}
-      {/* Animated Background */}
-      <div className="absolute inset-0"> {/* This div will now position relative to the viewport or nearest positioned ancestor */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 animate-pulse"></div>
-        <div className="absolute inset-0 opacity-20">
-          <div className="grid grid-cols-12 h-full">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div 
-                key={i} 
-                className="border-r border-cyan-500/20 animate-pulse"
-                style={{
-                  animationDelay: `${i * 0.1}s`,
-                  animationDuration: '3s'
-                }}
-              ></div>
-            ))}
-          </div>
-        </div>
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-950 to-slate-900 pt-20">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-purple-500/10 animate-gradient-shift"></div>
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                           radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 40% 20%, rgba(34, 211, 238, 0.1) 0%, transparent 50%)`
+        }}></div>
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%23334155' stroke-width='0.5' opacity='0.2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
+        }}></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center space-y-8">
-          <motion.div 
-            initial={{ opacity: 0, y: -50 }}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          {/* Main heading - Dual messaging */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6"
           >
-            <div className="space-y-4">
-              {/* Trust Badge */}
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-500/10 to-emerald-500/10 px-4 py-2 rounded-full border border-green-500/20">
-                <Shield className="w-4 h-4 text-green-400" />
-                <span className="text-green-400 text-sm font-medium">Enterprise-Grade Security Testing</span>
-              </div>
-              
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
-                Protect Your
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 cybak-text-glow">
-                  {" Business"}
-                </span>
-                <br />
-                <span className="text-3xl sm:text-4xl lg:text-6xl">From Cyber Threats</span>
-              </h1>
-              
-              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-4xl mx-auto">
-                Advanced vulnerability scanner that identifies security risks in your website. 
-                Get comprehensive reports with actionable insights in minutes.
-              </p>
+            <span className="text-white">Sécurisez votre site web</span>
+            <br />
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              En quelques clics
+            </span>
+          </motion.h1>
 
-              <div className="flex items-center justify-center space-x-2 text-cyan-400">
-                <AlertCircle className="w-5 h-5" />
-                <span className="text-lg font-medium">{typedText}</span>
-                <span className="animate-pulse">|</span>
-              </div>
-            </div>
-
-            {/* CTA Button */}
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 cybak-border-glow max-w-2xl mx-auto border border-slate-700">
-              <div className="space-y-4">
-                <div className="flex items-center justify-center space-x-3 text-yellow-400 mb-4">
-                  <Clock className="w-5 h-5" />
-                  <span className="font-semibold">Limited Time Offer: $4.99/month</span>
-                </div>
-                
-                <Button 
-                  onClick={onStart}
-                  className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 cybak-glow h-14 px-10 text-lg font-semibold w-full shadow-lg transform hover:scale-105 transition-all duration-200"
-                >
-                  <Shield className="w-5 h-5 mr-3" />
-                  Start Your Security Audit Now
-                </Button>
-                
-                <div className="flex items-center justify-center space-x-6 text-sm text-slate-400">
-                  <div className="flex items-center space-x-1">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>No credit card required</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>Cancel anytime</span>
-                  </div>
-                </div>
-                
-                <p className="text-center text-xs text-slate-500 mt-4">
-                  Secure payment processing • 256-bit SSL encryption
+          {/* Dual messaging - Simple for everyone, technical for pros */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-12 max-w-3xl mx-auto"
+          >
+            <p className="text-xl text-slate-300 mb-4 leading-relaxed">
+              <span className="font-semibold text-white">Pour tous :</span> Découvrez si votre site est sécurisé avec un simple scan. 
+              Obtenez un rapport clair avec des recommandations faciles à suivre.
+            </p>
+            
+            {/* Toggle for technical details */}
+            <button
+              onClick={() => setShowTechnical(!showTechnical)}
+              className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors mb-4"
+            >
+              <Info className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                {showTechnical ? "Masquer les détails techniques" : "Voir les détails techniques pour les pros"}
+              </span>
+            </button>
+            
+            {/* Technical details for professionals */}
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ 
+                opacity: showTechnical ? 1 : 0, 
+                height: showTechnical ? "auto" : 0 
+              }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-6 mt-4">
+                <p className="text-sm text-slate-400 mb-3">
+                  <span className="font-semibold text-cyan-400">Pour les professionnels :</span>
                 </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
+                    <span className="text-slate-300">Scan OWASP Top 10 + CWE/SANS Top 25</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
+                    <span className="text-slate-300">Analyse des headers HTTP (HSTS, CSP, X-Frame)</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
+                    <span className="text-slate-300">Détection XSS, SQLi, CSRF, XXE</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
+                    <span className="text-slate-300">API REST/GraphQL security testing</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
+                    <span className="text-slate-300">SSL/TLS configuration audit</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
+                    <span className="text-slate-300">Export JSON/PDF avec CVE mapping</span>
+                  </div>
+                </div>
               </div>
-            </div>
+            </motion.div>
+          </motion.div>
 
-            {/* Real Trust Indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-8 pt-6">
-              <div className="flex flex-col items-center space-y-2">
-                <div className="text-3xl font-bold text-cyan-400">100+</div>
-                <span className="text-slate-400 text-sm">Security Tests</span>
-              </div>
-              <div className="flex flex-col items-center space-y-2">
-                <div className="text-3xl font-bold text-green-400">2 min</div>
-                <span className="text-slate-400 text-sm">Scan Time</span>
-              </div>
-              <div className="flex flex-col items-center space-y-2">
-                <div className="text-3xl font-bold text-blue-400">24/7</div>
-                <span className="text-slate-400 text-sm">Monitoring</span>
-              </div>
-              <div className="flex flex-col items-center space-y-2">
-                <div className="text-3xl font-bold text-purple-400">SSL</div>
-                <span className="text-slate-400 text-sm">Encrypted</span>
-              </div>
+          {/* CTA Buttons - Clear and inviting */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+          >
+            <Button
+              onClick={onStart}
+              size="lg"
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 group"
+            >
+              Tester Gratuitement
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-slate-600 text-slate-300 hover:bg-slate-800/50 hover:text-white hover:border-cyan-500/50 px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300"
+            >
+              Voir une Démo
+            </Button>
+          </motion.div>
+
+
+          {/* Simple explanation for non-technical users */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-16 max-w-2xl mx-auto text-center"
+          >
+            <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-6">
+              <AlertTriangle className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-white mb-2">
+                Pourquoi scanner votre site ?
+              </h3>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                <span className="font-medium text-white">93% des sites web</span> ont au moins une vulnérabilité critique.
+                Un simple scan peut révéler des failles que les hackers exploitent quotidiennement.
+                <span className="block mt-2 text-cyan-400">Protégez vos données et celles de vos clients dès maintenant.</span>
+              </p>
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Subtle animated elements */}
+      <motion.div
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        animate={{
+          y: [0, -10, 0],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <div className="text-slate-500">
+          <ArrowRight className="w-6 h-6 rotate-90" />
+        </div>
+      </motion.div>
     </div>
   );
 }

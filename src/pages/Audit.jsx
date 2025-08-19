@@ -1,32 +1,19 @@
-
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { createPageUrl } from "@/utils";
-import { useAuth } from "@/context/AuthContext";
-import { db } from "@/lib/supabase";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Shield, 
-  ArrowLeft, 
-  Play, 
-  Download, 
-  AlertTriangle, 
-  CheckCircle, 
-  Clock,
-  Eye,
-  Lock,
-  Globe,
-  Zap
-} from "lucide-react";
-import { motion } from "framer-motion";
-
-import ScanningAnimation from "../components/audit/ScanningAnimation";
-import ResultsDisplay from "../components/audit/ResultsDisplay";
-import { LanguageContext } from "@/context/LanguageContext"; // Added import
+import React, { useState, useEffect, useCallback, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { createPageUrl } from '@/utils'
+import { Button } from '../components/ui/button'
+import { Input } from '../components/ui/input'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
+import { Alert, AlertDescription } from '../components/ui/alert'
+import { Progress } from '../components/ui/progress'
+import { Badge } from '../components/ui/badge'
+import { Shield, AlertTriangle, CheckCircle, XCircle, Loader2, Globe, Lock, Server, Zap, FileText, ChevronRight, Info, ArrowLeft, Play } from 'lucide-react'
+import { supabase } from '../lib/supabase'
+import { LanguageContext } from '../context/LanguageContext'
+import { createCheckoutSession, CYBAK_PRICE, checkPaymentStatus } from '../lib/stripe'
+import { performRealAudit, Audit, User } from '../lib/audit'
+import ScanningAnimation from '../components/audit/ScanningAnimation'
+import ResultsDisplay from '../components/audit/ResultsDisplay'
 
 export default function AuditPage() {
   const navigate = useNavigate();

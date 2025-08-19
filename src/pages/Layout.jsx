@@ -1,18 +1,18 @@
-
-
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { createPageUrl } from "@/utils";
-import { useAuth } from "@/context/AuthContext";
-import { Shield, Globe, ChevronDown, User as UserIcon, LogOut, LayoutDashboard } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useContext, useState } from 'react';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Shield, ChevronDown, Globe, UserIcon, LogOut, LayoutDashboard } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/context/AuthContext';
 import { LanguageContext } from '@/components/LanguageContext';
+import { createPageUrl } from '@/utils';
+import SkipLink from '@/components/SkipLink';
 
 // Helper function to get current page name from URL
 const getCurrentPageName = () => {
@@ -353,7 +353,7 @@ export default function Layout({ children }) {
       logout: 'Déconnexion',
       login: 'Connexion',
       signup: 'S\'abonner - 4,99€/mois',
-      signupShort: 'S\'abonner', // Added new translation key
+      signupShort: 'S\'abonner',
     },
     en: {
       services: 'Services',
@@ -370,7 +370,7 @@ export default function Layout({ children }) {
       logout: 'Logout',
       login: 'Login',
       signup: 'Subscribe - €4.99/month',
-      signupShort: 'Subscribe', // Added new translation key
+      signupShort: 'Subscribe',
     }
   };
 
@@ -385,23 +385,23 @@ export default function Layout({ children }) {
         <div className="flex items-center gap-1 sm:gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="bg-cyan-500 text-slate-50 px-2 py-2 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border hover:bg-accent h-10 border-slate-600 hover:text-cyan-400 hover:border-cyan-400 sm:px-3">
-                <UserIcon className="w-4 h-4 sm:mr-2" />
+              <Button variant="outline" className="bg-cyan-500 text-slate-50 px-2 py-2 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border hover:bg-cyan-600 h-10 border-slate-600 hover:text-white hover:border-cyan-400 sm:px-3" aria-label="Menu utilisateur" aria-expanded="false" aria-haspopup="true">
+                <UserIcon className="w-4 h-4 sm:mr-2" aria-hidden="true" />
                 <span className="truncate max-w-[60px] sm:max-w-[150px] hidden sm:inline">
                   {user.full_name || user.email}
                 </span>
-                <ChevronDown className="w-4 h-4 ml-1 sm:ml-2 flex-shrink-0" />
+                <ChevronDown className="w-4 h-4 ml-1 sm:ml-2 flex-shrink-0" aria-hidden="true" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-slate-800 border-slate-700 text-white">
-              <DropdownMenuItem asChild className="hover:!bg-slate-700 focus:!bg-slate-700 cursor:pointer">
+            <DropdownMenuContent className="bg-slate-800 border-slate-700 text-white" role="menu">
+              <DropdownMenuItem asChild className="hover:!bg-slate-700 focus:!bg-slate-700 cursor-pointer" role="menuitem">
                 <Link to={createPageUrl('Dashboard')}>
-                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                  <LayoutDashboard className="w-4 h-4 mr-2" aria-hidden="true" />
                   <span>{t.dashboard}</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleLogout} className="hover:!bg-slate-700 focus:!bg-slate-700 cursor:pointer">
-                <LogOut className="w-4 h-4 mr-2" />
+              <DropdownMenuItem onClick={handleLogout} className="hover:!bg-slate-700 focus:!bg-slate-700 cursor-pointer" role="menuitem">
+                <LogOut className="w-4 h-4 mr-2" aria-hidden="true" />
                 <span>{t.logout}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -412,11 +412,12 @@ export default function Layout({ children }) {
     return (
       <div className="flex items-center gap-1 sm:gap-2">
         <Button 
-          className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 cybak-glow text-sm px-3 sm:px-4" 
+          className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950 cybak-glow text-sm px-3 sm:px-4 font-semibold" 
           onClick={handleLogin}
+          aria-label={t.signup}
         >
           <span className="hidden sm:inline">{t.signup}</span>
-          <span className="sm:hidden">{t.signupShort}</span> {/* Updated to use t.signupShort */}
+          <span className="sm:hidden">{t.signupShort}</span>
         </Button>
       </div>
     );
@@ -433,8 +434,9 @@ export default function Layout({ children }) {
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      <div className="min-h-screen bg-slate-950">
-        <style jsx>{`
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white relative overflow-x-hidden">
+        <SkipLink />
+        <style>{`
           :root {
             --cybak-primary: #0ea5e9;
             --cybak-secondary: #06b6d4;
@@ -467,12 +469,12 @@ export default function Layout({ children }) {
         `}</style>
 
         {/* Simplified Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-sm">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-sm" role="banner" aria-label="Navigation principale">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Logo and Title */}
-              <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
-                <Shield className="w-8 h-8 text-cyan-400" />
+              <Link to="/" className="flex-shrink-0 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-md p-1" aria-label="CYBAK - Retour à l'accueil">
+                <Shield className="w-8 h-8 text-cyan-400" aria-hidden="true" />
                 <span className="text-2xl font-bold text-white">CYBAK</span>
               </Link>
 
@@ -482,17 +484,17 @@ export default function Layout({ children }) {
                 {/* Language Switcher */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="text-slate-300 hover:text-white">
-                      <Globe className="w-4 h-4 mr-1" />
+                    <Button variant="ghost" className="text-slate-300 hover:text-white focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950" aria-label="Changer de langue" aria-expanded="false" aria-haspopup="true">
+                      <Globe className="w-4 h-4 mr-1" aria-hidden="true" />
                       {language.toUpperCase()}
-                      <ChevronDown className="w-4 h-4 ml-1" />
+                      <ChevronDown className="w-4 h-4 ml-1" aria-hidden="true" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-slate-800 border-slate-700 text-white">
-                    <DropdownMenuItem onClick={() => setLanguage('fr')} className="hover:!bg-slate-700 focus:!bg-slate-700">
+                  <DropdownMenuContent className="bg-slate-800 border-slate-700 text-white" role="menu">
+                    <DropdownMenuItem onClick={() => setLanguage('fr')} className="hover:!bg-slate-700 focus:!bg-slate-700 cursor-pointer" role="menuitem" aria-label="Changer la langue en français">
                       🇫🇷 Français
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLanguage('en')} className="hover:!bg-slate-700 focus:!bg-slate-700">
+                    <DropdownMenuItem onClick={() => setLanguage('en')} className="hover:!bg-slate-700 focus:!bg-slate-700 cursor-pointer" role="menuitem" aria-label="Change language to English">
                       🇺🇸 English
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -503,7 +505,7 @@ export default function Layout({ children }) {
         </header>
 
         {/* Main Content */}
-        <main className="pt-16">
+        <main id="main-content" className="pt-16" role="main" aria-label="Contenu principal" tabIndex="-1">
           {children}
         </main>
       </div>

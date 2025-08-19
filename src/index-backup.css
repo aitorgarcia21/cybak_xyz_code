@@ -39,54 +39,7 @@ button, a, input, select, textarea {
   }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-  button {
-    @apply transition-all duration-200;
-  }
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-.focus\:not-sr-only:focus {
-  position: absolute;
-  width: auto;
-  height: auto;
-  padding: 0.5rem 1rem;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-}
-
-*:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
-*:focus:not(:focus-visible) {
-  outline: none;
-}
-
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -135,6 +88,7 @@ button, a, input, select, textarea {
     --sidebar-border: hsl(220, 13%, 91%);
     --sidebar-ring: hsl(199, 89%, 48%);
   }
+
   .dark {
     /* Mode sombre avec contraste amélioré */
     --background: hsl(222, 47%, 11%);
@@ -170,9 +124,11 @@ button, a, input, select, textarea {
     --sidebar-border: hsl(217, 33%, 25%);
     --sidebar-ring: hsl(199, 89%, 48%);
   }
+
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
     @apply bg-background text-foreground;
   }

@@ -1,10 +1,15 @@
-// CYBAK - Serveur Express.js pour Railway avec Stripe
-const express = require('express')
-const cors = require('cors')
-const path = require('path')
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const { createClient } = require('@supabase/supabase-js')
-const { securityHeaders, authRateLimiter, stripeRateLimiter, helmet } = require('./middleware/security')
+// server.js - Serveur Express pour CYBAK avec intégration Stripe
+import express from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+import { createClient } from '@supabase/supabase-js'
+import securityMiddleware from './middleware/security.js'
+import Stripe from 'stripe'
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_')
 
 const app = express()
 const PORT = process.env.PORT || 3000

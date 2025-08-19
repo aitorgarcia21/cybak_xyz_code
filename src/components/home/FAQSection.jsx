@@ -1,87 +1,64 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export default function FAQSection() {
-  const [openItems, setOpenItems] = useState(new Set([0]));
+  const [openIndex, setOpenIndex] = useState(null);
 
   const faqs = [
     {
-      question: "Is my data secure during the security scan?",
-      answer: "Yes, absolutely. We perform only passive, read-only scans that don't modify or store any of your data. All communications are encrypted using industry-standard SSL/TLS protocols. We never store sensitive information from your website."
+      question: "Mes données sont-elles sécurisées pendant le scan ?",
+      answer: "Oui, absolument. Nous effectuons uniquement des scans passifs en lecture seule qui ne modifient ni ne stockent vos données. Toutes les communications sont chiffrées avec les protocoles SSL/TLS standard. Nous ne stockons jamais d'informations sensibles de votre site web."
     },
     {
-      question: "Is the CYBAK security scan legal?",
-      answer: "Yes, our scans are completely legal as they only perform passive analysis similar to what search engines do. However, we recommend scanning only websites you own or have explicit permission to test. Our scans comply with ethical security testing standards."
+      question: "Le scan de sécurité CYBAK est-il légal ?",
+      answer: "Oui, nos scans sont complètement légaux car ils effectuent uniquement une analyse passive similaire à ce que font les moteurs de recherche. Cependant, nous recommandons de scanner uniquement les sites web que vous possédez ou pour lesquels vous avez une autorisation explicite."
     },
     {
-      question: "What happens if vulnerabilities are found?",
-      answer: "You'll receive a detailed report categorizing issues by severity (critical, high, medium, low). Each vulnerability includes a clear explanation, potential impact, and step-by-step remediation guidance. Our support team is available to help you understand and address the findings."
+      question: "Que se passe-t-il si des vulnérabilités sont trouvées ?",
+      answer: "Vous recevrez un rapport détaillé catégorisant les problèmes par gravité (critique, élevé, moyen, faible). Chaque vulnérabilité inclut une explication claire, l'impact potentiel, et des conseils de correction étape par étape. Notre équipe support est disponible pour vous aider."
     },
     {
-      question: "What types of websites can CYBAK scan?",
-      answer: "CYBAK can analyze most web technologies including WordPress, Shopify, custom applications, REST APIs, and more. Our scanner performs over 100 security checks covering common vulnerabilities, misconfigurations, and security best practices."
+      question: "Quels types de sites web CYBAK peut-il scanner ?",
+      answer: "CYBAK peut analyser la plupart des technologies web incluant WordPress, Shopify, applications personnalisées, API REST, et plus. Notre scanner effectue plus de 100 vérifications de sécurité couvrant les vulnérabilités communes et les bonnes pratiques."
     },
     {
-      question: "How is CYBAK different from free security scanners?",
-      answer: "While free tools typically run 10-20 basic checks, CYBAK performs 100+ comprehensive tests. We provide detailed, actionable reports with prioritized fixes, continuous monitoring options, and professional support to help you implement security improvements."
+      question: "En quoi CYBAK diffère-t-il des scanners gratuits ?",
+      answer: "Alors que les outils gratuits effectuent typiquement 10-20 vérifications basiques, CYBAK effectue plus de 100 tests complets. Nous fournissons des rapports détaillés et actionnables avec des corrections priorisées, des options de surveillance continue, et un support professionnel."
     },
     {
-      question: "What kind of support is included?",
-      answer: "All plans include email support with typical response times under 24 hours. We help you understand scan results, prioritize fixes, and provide guidance on security best practices. Our team is here to ensure you can effectively improve your website's security."
+      question: "Quel type de support est inclus ?",
+      answer: "Tous les plans incluent un support par email avec des temps de réponse typiques sous 24 heures. Nous vous aidons à comprendre les résultats du scan, prioriser les corrections, et fournissons des conseils sur les bonnes pratiques de sécurité."
     },
     {
-      question: "Can I cancel my subscription anytime?",
-      answer: "Yes, you can cancel your subscription at any time directly from your dashboard. There are no long-term contracts or cancellation fees. We also offer a 7-day free trial so you can test our service risk-free."
+      question: "Puis-je annuler mon abonnement à tout moment ?",
+      answer: "Oui, vous pouvez annuler votre abonnement à tout moment directement depuis votre tableau de bord. Il n'y a pas de contrats à long terme ou de frais d'annulation. Nous offrons aussi un essai gratuit de 7 jours pour tester notre service sans risque."
     },
     {
-      question: "How do you handle privacy and data protection?",
-      answer: "We take privacy seriously. We only collect minimal data necessary for the service, never sell your information, and you can request data deletion at any time. Our systems use encryption and follow security best practices to protect your information."
+      question: "Comment gérez-vous la confidentialité et la protection des données ?",
+      answer: "Nous prenons la confidentialité au sérieux. Nous collectons uniquement les données minimales nécessaires au service, ne vendons jamais vos informations, et vous pouvez demander la suppression des données à tout moment. Nos systèmes utilisent le chiffrement et suivent les bonnes pratiques de sécurité."
     }
   ];
 
-  const toggleItem = (index) => {
-    const newOpenItems = new Set(openItems);
-    if (newOpenItems.has(index)) {
-      newOpenItems.delete(index);
-    } else {
-      newOpenItems.add(index);
-    }
-    setOpenItems(newOpenItems);
-  };
-
   return (
-    <div className="py-20 bg-slate-900/30">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-24 bg-gradient-to-b from-slate-900 to-slate-950">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-4 py-2 rounded-full border border-indigo-500/20 mb-6"
-          >
-            <HelpCircle className="w-4 h-4 text-indigo-400" />
-            <span className="text-indigo-400 text-sm font-medium">Got Questions? We've Got Answers</span>
-          </motion.div>
-          
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6 }}
             className="text-4xl sm:text-5xl font-bold text-white mb-4"
           >
-            Frequently Asked Questions
+            Questions Fréquemment Posées
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-slate-300 max-w-2xl mx-auto"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-xl text-slate-300"
           >
-            Everything you need to know about securing your website with CYBAK
+            Tout ce que vous devez savoir sur CYBAK
           </motion.p>
         </div>
 
@@ -91,42 +68,58 @@ export default function FAQSection() {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
+              transition={{ duration: 0.6, delay: index * 0.05 }}
+              className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 overflow-hidden"
             >
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-cyan-500/30 transition-all duration-300 overflow-hidden">
-                <CardContent className="p-0">
-                  <button
-                    onClick={() => toggleItem(index)}
-                    className="w-full text-left p-6 flex items-center justify-between hover:bg-slate-700/30 transition-colors duration-200"
-                  >
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      {faq.question}
-                    </h3>
-                    {openItems.has(index) ? (
-                      <ChevronUp className="w-5 h-5 text-cyan-400 flex-shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
-                    )}
-                  </button>
-                  
-                  {openItems.has(index) && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="px-6 pb-6"
-                    >
-                      <p className="text-slate-300 leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </CardContent>
-              </Card>
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full text-left p-6 hover:bg-slate-700/50 transition-colors"
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
+              >
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold text-white pr-4">
+                    {faq.question}
+                  </h3>
+                  <ChevronDown 
+                    className={`w-5 h-5 text-slate-400 transition-transform duration-300 flex-shrink-0 ${
+                      openIndex === index ? 'rotate-180' : ''
+                    }`}
+                  />
+                </div>
+              </button>
+              <div
+                id={`faq-answer-${index}`}
+                className={`overflow-hidden transition-all duration-300 ${
+                  openIndex === index ? 'max-h-96' : 'max-h-0'
+                }`}
+              >
+                <div className="px-6 pb-6">
+                  <p className="text-slate-300 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-slate-300 mb-2">
+            Vous avez encore des questions ?
+          </p>
+          <a 
+            href="mailto:support@cybak.xyz" 
+            className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+          >
+            Contactez notre équipe support →
+          </a>
+        </motion.div>
       </div>
     </div>
   );

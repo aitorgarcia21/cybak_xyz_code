@@ -176,9 +176,10 @@ export default function SignUp() {
         <div className="mb-6">
           <Link 
             to="/"
-            className="inline-flex items-center text-slate-400 hover:text-cyan-400 transition-colors"
+            className="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors mb-6 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded p-1"
+            aria-label={t.backToHome}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="w-5 h-5 mr-2" aria-hidden="true" />
             {t.backToHome}
           </Link>
         </div>
@@ -207,130 +208,142 @@ export default function SignUp() {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (
-                  <Alert className="bg-red-900/20 border-red-500/30 text-red-400">
+                  <Alert className="bg-red-900/20 border-red-500 text-red-400" role="alert" aria-live="polite">
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
                 )}
 
                 {success && (
-                  <Alert className="bg-green-900/20 border-green-500/30 text-green-400">
-                    <CheckCircle className="w-4 h-4" />
-                    <AlertDescription>{success}</AlertDescription>
+                  <Alert className="bg-green-900/20 border-green-500 text-green-400" role="alert" aria-live="polite">
+                    <AlertDescription className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5" aria-hidden="true" />
+                      {success}
+                    </AlertDescription>
                   </Alert>
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-white font-medium text-sm">
-                      {t.firstName}
+                    <label htmlFor="firstName" className="block text-sm font-medium text-slate-300 mb-2">
+                      {t.firstName} *
                     </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
                       <Input
+                        id="firstName"
                         type="text"
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 pl-10"
-                        placeholder="John"
-                        disabled={isLoading}
+                        className="bg-slate-800 border-slate-700 text-white focus:border-cyan-400 focus:ring-cyan-400"
+                        placeholder={t.firstName}
+                        required
+                        aria-required="true"
+                        aria-label={t.firstName}
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-white font-medium text-sm">
-                      {t.lastName}
+                    <label htmlFor="lastName" className="block text-sm font-medium text-slate-300 mb-2">
+                      {t.lastName} *
                     </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
                       <Input
+                        id="lastName"
                         type="text"
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 pl-10"
-                        placeholder="Doe"
-                        disabled={isLoading}
+                        className="bg-slate-800 border-slate-700 text-white focus:border-cyan-400 focus:ring-cyan-400"
+                        placeholder={t.lastName}
+                        required
+                        aria-required="true"
+                        aria-label={t.lastName}
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-white font-medium text-sm">
-                    {t.email}
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                    {t.email} *
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
                     <Input
+                      id="email"
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 pl-10"
-                      placeholder="votre@email.com"
-                      disabled={isLoading}
+                      className="bg-slate-800 border-slate-700 text-white pl-10 focus:border-cyan-400 focus:ring-cyan-400"
+                      placeholder="example@email.com"
+                      required
+                      aria-required="true"
+                      aria-label={t.email}
+                      aria-describedby="email-error"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-white font-medium text-sm">
-                    {t.password}
+                  <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+                    {t.password} *
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
                     <Input
-                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      type={showPassword ? 'text' : 'password'}
                       name="password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 pl-10 pr-10"
+                      className="bg-slate-800 border-slate-700 text-white pl-10 pr-10 focus:border-cyan-400 focus:ring-cyan-400"
                       placeholder="••••••••"
-                      disabled={isLoading}
+                      required
+                      aria-required="true"
+                      aria-label={t.password}
+                      aria-describedby="password-requirements"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-cyan-400 transition-colors"
-                      disabled={isLoading}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
+                      aria-label={showPassword ? t.hidePassword : t.showPassword}
                     >
-                      {showPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )}
+                      {showPassword ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
                     </button>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-white font-medium text-sm">
-                    {t.confirmPassword}
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-300 mb-2">
+                    {t.confirmPassword} *
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
                     <Input
-                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      type={showConfirmPassword ? 'text' : 'password'}
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 pl-10 pr-10"
+                      className="bg-slate-800 border-slate-700 text-white pl-10 pr-10 focus:border-cyan-400 focus:ring-cyan-400"
                       placeholder="••••••••"
-                      disabled={isLoading}
+                      required
+                      aria-required="true"
+                      aria-label={t.confirmPassword}
+                      aria-describedby="confirm-password-error"
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-cyan-400 transition-colors"
-                      disabled={isLoading}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
+                      aria-label={showConfirmPassword ? t.hidePassword : t.showPassword}
                     >
-                      {showConfirmPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )}
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
                     </button>
                   </div>
                 </div>
@@ -338,7 +351,8 @@ export default function SignUp() {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 cybak-glow"
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-3 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+                  aria-busy={isLoading}
                 >
                   {isLoading ? (
                     <div className="flex items-center">

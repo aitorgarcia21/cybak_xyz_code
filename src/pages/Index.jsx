@@ -5,7 +5,6 @@ import { useAuth } from "@/context/AuthContext";
 import { Shield, Globe, User, LogOut } from "lucide-react";
 import HeroSection from "../components/home/HeroSection";
 import FeaturesSection from "../components/home/FeaturesSection";
-import TestimonialsSection from "../components/home/TestimonialsSection";
 import PricingSection from "../components/home/PricingSection";
 import FAQSection from "../components/home/FAQSection";
 
@@ -108,7 +107,6 @@ export default function IndexPage() {
             onStart={handleStart}
           />
           <FeaturesSection />
-          <TestimonialsSection />
           <PricingSection onStart={handleStart} />
           <FAQSection />
         </div>

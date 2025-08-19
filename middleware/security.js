@@ -3,8 +3,8 @@
  * Ajoute les en-têtes de sécurité HTTP essentiels
  */
 
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 // Configuration des en-têtes de sécurité
 const securityHeaders = (req, res, next) => {
@@ -73,10 +73,12 @@ const stripeRateLimiter = rateLimit({
   message: 'Trop de requêtes de paiement, veuillez patienter.',
 });
 
-module.exports = {
+const securityMiddleware = {
   securityHeaders,
   createRateLimiter,
   authRateLimiter,
   stripeRateLimiter,
   helmet
 };
+
+export default securityMiddleware;
