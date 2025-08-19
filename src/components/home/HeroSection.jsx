@@ -1,10 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Activity, Globe2, CheckCircle, AlertTriangle, Info } from "lucide-react";
 import { motion } from "framer-motion";
+import { LanguageContext } from "@/context/LanguageContext";
 
 export default function HeroSection({ onStart }) {
   const [showTechnical, setShowTechnical] = useState(false);
+  const { language } = useContext(LanguageContext) || { language: 'en' };
+
+  const translations = {
+    en: {
+      title: "Secure your website",
+      subtitle: "In just a few clicks",
+      forEveryone: "For everyone:",
+      forEveryoneDesc: "Discover if your site is secure with a simple scan. Get a clear report with easy-to-follow recommendations.",
+      forTechnical: "For technical teams:",
+      forTechnicalDesc: "OWASP Top 10, CVE detection, SSL/TLS analysis, security headers audit, vulnerability assessment with detailed remediation.",
+      testFree: "Test for Free",
+      viewDemo: "View Demo",
+      whyScan: "Why scan your site?",
+      whyScanDesc: "93% of websites have at least one critical vulnerability. A simple scan can reveal flaws that hackers exploit daily.",
+      protectNow: "Protect your data and your customers' data now."
+    },
+    fr: {
+      title: "Sécurisez votre site web",
+      subtitle: "En quelques clics",
+      forEveryone: "Pour tous :",
+      forEveryoneDesc: "Découvrez si votre site est sécurisé avec un simple scan. Obtenez un rapport clair avec des recommandations faciles à suivre.",
+      forTechnical: "Pour les équipes techniques :",
+      forTechnicalDesc: "OWASP Top 10, détection CVE, analyse SSL/TLS, audit des en-têtes de sécurité, évaluation des vulnérabilités avec remédiation détaillée.",
+      testFree: "Tester Gratuitement",
+      viewDemo: "Voir une Démo",
+      whyScan: "Pourquoi scanner votre site ?",
+      whyScanDesc: "93% des sites web ont au moins une vulnérabilité critique. Un simple scan peut révéler des failles que les hackers exploitent quotidiennement.",
+      protectNow: "Protégez vos données et celles de vos clients dès maintenant."
+    }
+  };
+
+  const t = translations[language] || translations.en;
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-950 to-slate-900 pt-20">
@@ -31,10 +64,10 @@ export default function HeroSection({ onStart }) {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6"
           >
-            <span className="text-white">Sécurisez votre site web</span>
+            <span className="text-white">{t.title}</span>
             <br />
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              En quelques clics
+              {t.subtitle}
             </span>
           </motion.h1>
 
@@ -46,8 +79,7 @@ export default function HeroSection({ onStart }) {
             className="mb-12 max-w-3xl mx-auto"
           >
             <p className="text-xl text-slate-300 mb-4 leading-relaxed">
-              <span className="font-semibold text-white">Pour tous :</span> Découvrez si votre site est sécurisé avec un simple scan. 
-              Obtenez un rapport clair avec des recommandations faciles à suivre.
+              <span className="font-semibold text-white">{t.forEveryone}</span> {t.forEveryoneDesc}
             </p>
             
             {/* Toggle for technical details */}
@@ -57,7 +89,7 @@ export default function HeroSection({ onStart }) {
             >
               <Info className="w-4 h-4" />
               <span className="text-sm font-medium">
-                {showTechnical ? "Masquer les détails techniques" : "Voir les détails techniques pour les pros"}
+{showTechnical ? (language === 'fr' ? "Masquer les détails techniques" : "Hide technical details") : (language === 'fr' ? "Voir les détails techniques pour les pros" : "View technical details for pros")}
               </span>
             </button>
             
@@ -117,7 +149,7 @@ export default function HeroSection({ onStart }) {
               size="lg"
               className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 group"
             >
-              Tester Gratuitement
+              {t.testFree}
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button
@@ -125,7 +157,7 @@ export default function HeroSection({ onStart }) {
               size="lg"
               className="border-slate-600 text-slate-300 hover:bg-slate-800/50 hover:text-white hover:border-cyan-500/50 px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300"
             >
-              Voir une Démo
+              {t.viewDemo}
             </Button>
           </motion.div>
 
@@ -140,12 +172,11 @@ export default function HeroSection({ onStart }) {
             <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-6">
               <AlertTriangle className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-white mb-2">
-                Pourquoi scanner votre site ?
+                {t.whyScan}
               </h3>
               <p className="text-sm text-slate-300 leading-relaxed">
-                <span className="font-medium text-white">93% des sites web</span> ont au moins une vulnérabilité critique.
-                Un simple scan peut révéler des failles que les hackers exploitent quotidiennement.
-                <span className="block mt-2 text-cyan-400">Protégez vos données et celles de vos clients dès maintenant.</span>
+                {t.whyScanDesc}
+                <span className="block mt-2 text-cyan-400">{t.protectNow}</span>
               </p>
             </div>
           </motion.div>

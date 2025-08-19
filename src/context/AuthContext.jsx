@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { auth } from '@/lib/supabase'
+import { auth } from '@/lib/api'
 
 const AuthContext = createContext({})
 
@@ -19,22 +19,29 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
-      const { session } = await auth.getSession()
-      setSession(session)
-      setUser(session?.user ?? null)
+      const { user, error } = await auth.getCurrentUser()
+      if (error) {
+        console.error('Error getting user:', error)
+        setLoading(false)
+        return
+      }
+
+      if (user) {
+        setUser(user)
+      }
       setLoading(false)
     }
 
     getInitialSession()
 
     // Listen for auth changes
-    const { data: { subscription } } = auth.onAuthStateChange(async (event, session) => {
+    const unsubscribe = auth.onAuthStateChange(async (event, session) => {
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
     })
 
-    return () => subscription.unsubscribe()
+    return () => unsubscribe()
   }, [])
 
   const signUp = async (email, password, userData = {}) => {

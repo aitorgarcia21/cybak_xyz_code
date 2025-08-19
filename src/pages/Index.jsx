@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useAuth } from "@/context/AuthContext";
-import { Shield, Globe, User, LogOut } from "lucide-react";
+import { LanguageContext } from "@/context/LanguageContext";
+import { Shield, Globe, User, LogOut, ChevronDown } from "lucide-react";
 import HeroSection from "../components/home/HeroSection";
 import FeaturesSection from "../components/home/FeaturesSection";
 import PricingSection from "../components/home/PricingSection";
@@ -10,8 +11,18 @@ import FAQSection from "../components/home/FAQSection";
 
 export default function IndexPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { language, setLanguage } = useContext(LanguageContext) || { language: 'en', setLanguage: () => {} };
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' }
+  ];
+
+  const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
 
   useEffect(() => {
     const checkUserAndRedirect = async () => {
@@ -77,9 +88,38 @@ export default function IndexPage() {
                 )}
                 
                 {/* Language Switcher */}
-                <div className="flex items-center space-x-1">
-                  <Globe className="w-4 h-4 text-cyan-400" />
-                  <span className="text-white text-sm">EN</span>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border border-slate-600 transition-colors"
+                  >
+                    <span className="text-lg">{currentLanguage.flag}</span>
+                    <span className="text-white text-sm font-medium">{currentLanguage.code.toUpperCase()}</span>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {showLanguageDropdown && (
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            setLanguage(lang.code);
+                            setShowLanguageDropdown(false);
+                          }}
+                          className={`w-full flex items-center space-x-3 px-4 py-3 text-left hover:bg-slate-700/50 transition-colors first:rounded-t-lg last:rounded-b-lg ${
+                            language === lang.code ? 'bg-cyan-500/20 text-cyan-400' : 'text-white'
+                          }`}
+                        >
+                          <span className="text-lg">{lang.flag}</span>
+                          <div>
+                            <div className="font-medium">{lang.name}</div>
+                            <div className="text-xs text-slate-400">{lang.code.toUpperCase()}</div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

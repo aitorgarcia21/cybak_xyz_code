@@ -14,6 +14,7 @@ import PaymentSuccess from './PaymentSuccess'
 import Dashboard from './Dashboard'
 import Audit from './Audit'
 import AuditResults from './AuditResults'
+import Admin from './Admin'
 import Index from './Index'
 import Layout from './Layout'
 
@@ -53,6 +54,12 @@ export default function AppRoutes() {
               <Layout>
                 <AuditResults />
               </Layout>
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admin />
             </ProtectedRoute>
           } />
         </Routes>

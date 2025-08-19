@@ -1,88 +1,117 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { Shield, Scan, FileText, TrendingUp, Lock, Zap, ChevronDown, Info, AlertCircle, CheckCircle2 } from "lucide-react";
+import { LanguageContext } from "@/context/LanguageContext";
 
 export default function FeaturesSection() {
   const [expandedFeature, setExpandedFeature] = useState(null);
   const [showTechnical, setShowTechnical] = useState(false);
+  const { language } = useContext(LanguageContext) || { language: 'en' };
+
+  const translations = {
+    en: {
+      title: "Everything you need",
+      subtitle: "For complete security",
+      description: "Professional security tools, accessible to everyone"
+    },
+    fr: {
+      title: "Tout ce dont vous avez besoin",
+      subtitle: "Pour une sécurité complète",
+      description: "Des outils de sécurité professionnels, accessibles à tous"
+    }
+  };
+
+  const t = translations[language] || translations.en;
 
   const features = [
     {
       icon: Scan,
-      title: "Analyse Intelligente",
-      simpleDesc: "Votre site est scanné automatiquement pour détecter les failles",
-      techDesc: "Moteur d'analyse basé sur OWASP ZAP, Nuclei et patterns CVE. Détection par IA des vulnérabilités zero-day.",
+      title: language === 'fr' ? "Analyse Intelligente" : "Smart Analysis",
+      simpleDesc: language === 'fr' ? "Votre site est scanné automatiquement pour détecter les failles" : "Your site is automatically scanned to detect vulnerabilities",
+      techDesc: language === 'fr' ? "Moteur d'analyse basé sur OWASP ZAP, Nuclei et patterns CVE. Détection par IA des vulnérabilités zero-day." : "Analysis engine based on OWASP ZAP, Nuclei and CVE patterns. AI detection of zero-day vulnerabilities.",
       color: "from-blue-500 to-cyan-500",
-      details: [
+      details: language === 'fr' ? [
         "Scan de ports et services",
         "Analyse des dépendances npm/pip",
         "Détection de backdoors",
         "Fuzzing intelligent"
-      ]
-    },
-    {
-      icon: Shield,
-      title: "Protection Continue",
-      simpleDesc: "Surveillance 24/7 de votre site avec alertes instantanées",
-      techDesc: "Monitoring actif avec webhooks, intégration SIEM, et corrélation d'événements en temps réel.",
-      color: "from-purple-500 to-pink-500",
-      details: [
-        "WAF virtuel intégré",
-        "Détection d'intrusion (IDS)",
-        "Analyse comportementale",
-        "Threat intelligence feeds"
+      ] : [
+        "Port and service scanning",
+        "npm/pip dependency analysis",
+        "Backdoor detection",
+        "Smart fuzzing"
       ]
     },
     {
       icon: FileText,
-      title: "Rapports Détaillés",
-      simpleDesc: "Rapport clair avec solutions concrètes pour chaque problème",
-      techDesc: "Export PDF/JSON avec mapping CVE, CVSS scoring, et intégration Jira/GitHub pour DevSecOps.",
+      title: language === 'fr' ? "Rapports Détaillés" : "Detailed Reports",
+      simpleDesc: language === 'fr' ? "Rapport clair avec solutions concrètes pour chaque problème" : "Clear report with concrete solutions for each issue",
+      techDesc: language === 'fr' ? "Export PDF/JSON avec mapping CVE, CVSS scoring, et intégration Jira/GitHub pour DevSecOps." : "PDF/JSON export with CVE mapping, CVSS scoring, and Jira/GitHub integration for DevSecOps.",
       color: "from-green-500 to-emerald-500",
-      details: [
+      details: language === 'fr' ? [
         "Priorisation par criticité",
-        "Code snippets de correction",
-        "Timeline de remédiation",
-        "Comparaison avant/après"
+        "Solutions étape par étape",
+        "Code d'exemple pour corrections",
+        "Timeline de remédiation"
+      ] : [
+        "Priority by criticality",
+        "Step-by-step solutions",
+        "Example code for fixes",
+        "Remediation timeline"
       ]
     },
     {
       icon: TrendingUp,
-      title: "Analyse de Risques",
-      simpleDesc: "Suivez l'évolution de la sécurité de votre site",
-      techDesc: "Dashboards KPI/KRI, calcul de risque résiduel, et modélisation des menaces STRIDE/DREAD.",
+      title: language === 'fr' ? "Amélioration Continue" : "Continuous Improvement",
+      simpleDesc: language === 'fr' ? "Suivi de vos progrès et recommandations personnalisées" : "Track your progress and get personalized recommendations",
+      techDesc: language === 'fr' ? "Tableau de bord avec métriques de sécurité, trending analysis, et benchmarking sectoriel." : "Dashboard with security metrics, trending analysis, and industry benchmarking.",
       color: "from-orange-500 to-red-500",
-      details: [
-        "Score de sécurité global",
-        "Tendances mensuelles",
-        "Benchmarking sectoriel",
-        "Prédiction ML des risques"
+      details: language === 'fr' ? [
+        "Score de sécurité évolutif",
+        "Comparaison avec l'industrie",
+        "Alertes proactives",
+        "Roadmap sécurité"
+      ] : [
+        "Evolving security score",
+        "Industry comparison",
+        "Proactive alerts",
+        "Security roadmap"
       ]
     },
     {
       icon: Lock,
-      title: "Conformité",
-      simpleDesc: "Respectez automatiquement les normes de sécurité",
-      techDesc: "Validation GDPR, PCI-DSS, ISO 27001, SOC2. Génération automatique de preuves d'audit.",
+      title: language === 'fr' ? "Conformité Garantie" : "Guaranteed Compliance",
+      simpleDesc: language === 'fr' ? "Vérification automatique des standards de sécurité" : "Automatic verification of security standards",
+      techDesc: language === 'fr' ? "Audit de conformité RGPD, SOC 2, ISO 27001, PCI DSS avec génération de rapports de certification." : "GDPR, SOC 2, ISO 27001, PCI DSS compliance audit with certification report generation.",
       color: "from-indigo-500 to-purple-500",
-      details: [
-        "Checklist de conformité",
-        "Audit trail complet",
-        "Templates de politique",
-        "Certification ready"
+      details: language === 'fr' ? [
+        "RGPD/GDPR compliance",
+        "Standards ISO 27001",
+        "Audit PCI DSS",
+        "Rapports de certification"
+      ] : [
+        "GDPR/RGPD compliance",
+        "ISO 27001 standards",
+        "PCI DSS audit",
+        "Certification reports"
       ]
     },
     {
       icon: Zap,
-      title: "Ultra Rapide",
-      simpleDesc: "Résultats en quelques minutes seulement",
-      techDesc: "Architecture distribuée, scan parallélisé, cache intelligent. API rate: 10k req/sec.",
+      title: language === 'fr' ? "Ultra Rapide" : "Ultra Fast",
+      simpleDesc: language === 'fr' ? "Résultats en quelques minutes seulement" : "Results in just a few minutes",
+      techDesc: language === 'fr' ? "Architecture distribuée, scan parallélisé, cache intelligent. API rate: 10k req/sec." : "Distributed architecture, parallelized scanning, smart caching. API rate: 10k req/sec.",
       color: "from-yellow-500 to-orange-500",
-      details: [
-        "Scan incrémental",
-        "Priorisation intelligente",
-        "Mode turbo disponible",
-        "SLA 99.99% uptime"
+      details: language === 'fr' ? [
+        "Scan en moins de 5 min",
+        "Architecture cloud native",
+        "Cache intelligent",
+        "API haute performance"
+      ] : [
+        "Scan in under 5 min",
+        "Cloud native architecture",
+        "Smart caching",
+        "High performance API"
       ]
     }
   ];
@@ -101,14 +130,14 @@ export default function FeaturesSection() {
           >
 
             <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Tout ce dont vous avez besoin
+              {t.title}
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-                Pour une sécurité complète
+                {t.subtitle}
               </span>
             </h2>
 
             <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-6">
-              Des outils de sécurité professionnels, accessibles à tous
+              {t.description}
             </p>
             
           </motion.div>
