@@ -19,17 +19,22 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
-      const { user, error } = await auth.getCurrentUser()
-      if (error) {
-        console.error('Error getting user:', error)
-        setLoading(false)
-        return
-      }
+      try {
+        const { user, error } = await auth.getCurrentUser()
+        if (error) {
+          // Silently handle auth errors - user is simply not logged in
+          setLoading(false)
+          return
+        }
 
-      if (user) {
-        setUser(user)
+        if (user) {
+          setUser(user)
+        }
+        setLoading(false)
+      } catch (err) {
+        // Silently handle network/API errors
+        setLoading(false)
       }
-      setLoading(false)
     }
 
     getInitialSession()

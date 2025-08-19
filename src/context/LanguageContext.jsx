@@ -1,19 +1,33 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 
 // Créer le contexte de langue
 const LanguageContext = createContext()
 
 // Provider pour gérer la langue
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('en') // English by default
+  const [language, setLanguage] = useState(() => {
+    // Récupérer la langue depuis localStorage ou utiliser 'en' par défaut
+    return localStorage.getItem('cybak-language') || 'en'
+  })
+
+  // Sauvegarder la langue dans localStorage à chaque changement
+  useEffect(() => {
+    localStorage.setItem('cybak-language', language)
+  }, [language])
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'fr' ? 'en' : 'fr')
   }
 
+  // Wrapper pour setLanguage qui sauvegarde automatiquement
+  const setLanguageWithPersistence = (newLanguage) => {
+    setLanguage(newLanguage)
+    localStorage.setItem('cybak-language', newLanguage)
+  }
+
   const value = {
     language,
-    setLanguage,
+    setLanguage: setLanguageWithPersistence,
     toggleLanguage
   }
 

@@ -86,40 +86,40 @@ export default function PricingSection({ onStart }) {
           </motion.p>
         </div>
 
-        <div className="flex justify-center max-w-6xl mx-auto">
+        <div className="flex justify-center">
               {/* Starter Plan - Seul plan disponible */}
-              <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 max-w-md">
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-white mb-2">{t.planTitle}</h3>
-                  <p className="text-slate-400 text-sm">{t.planSubtitle}</p>
-                  <div className="mt-6">
-                    <span className="text-4xl font-bold text-white line-through text-slate-500">$29</span>
-                    <span className="text-4xl font-bold text-green-400 ml-2">Gratuit</span>
+              <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-12 border border-slate-700 w-full max-w-2xl">
+                <div className="text-center mb-10">
+                  <h3 className="text-3xl font-bold text-white mb-3">{t.planTitle}</h3>
+                  <p className="text-slate-400 text-lg mb-6">{t.planSubtitle}</p>
+                  <div className="mb-8">
+                    <span className="text-5xl font-bold text-slate-500 line-through mr-4">$29</span>
+                    <span className="text-6xl font-bold text-green-400">{language === 'fr' ? 'Gratuit' : 'Free'}</span>
                   </div>
+                  <Button 
+                    size="lg"
+                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-4 text-lg transition-all duration-200 transform hover:scale-[1.02]"
+                    onClick={onStart}
+                  >
+                    {t.startButton}
+                  </Button>
                 </div>
-                <Button 
-                  variant="outline"
-                  className="w-full border-slate-600 text-slate-300 hover:bg-slate-700/50 mb-8"
-                  onClick={onStart}
-                >
-                  {t.startButton}
-                </Button>
-                <ul className="space-y-3">
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-300 text-sm">{t.features.unlimitedAudits}</span>
+                <ul className="grid grid-cols-2 gap-4 text-left">
+                  <li className="flex items-center space-x-3">
+                    <Check className="w-6 h-6 text-green-400 flex-shrink-0" />
+                    <span className="text-slate-300 text-base font-medium">{t.features.unlimitedAudits}</span>
                   </li>
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-300 text-sm">{t.features.securityTests}</span>
+                  <li className="flex items-center space-x-3">
+                    <Check className="w-6 h-6 text-green-400 flex-shrink-0" />
+                    <span className="text-slate-300 text-base font-medium">{t.features.securityTests}</span>
                   </li>
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-300 text-sm">{t.features.detailedReports}</span>
+                  <li className="flex items-center space-x-3">
+                    <Check className="w-6 h-6 text-green-400 flex-shrink-0" />
+                    <span className="text-slate-300 text-base font-medium">{t.features.detailedReports}</span>
                   </li>
-                  <li className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-300 text-sm">{t.features.emailSupport}</span>
+                  <li className="flex items-center space-x-3">
+                    <Check className="w-6 h-6 text-green-400 flex-shrink-0" />
+                    <span className="text-slate-300 text-base font-medium">{t.features.emailSupport}</span>
                   </li>
                 </ul>
               </div>

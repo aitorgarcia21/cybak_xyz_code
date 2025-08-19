@@ -18,8 +18,7 @@ export default function IndexPage() {
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' }
+    { code: 'fr', name: 'Français', flag: '🇫🇷' }
   ];
 
   const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
@@ -161,7 +160,7 @@ export default function IndexPage() {
             <HeroSection 
               onStart={handleStart}
             />
-            <FeaturesSection />
+            <FeaturesSection onStart={handleStart} />
             <PricingSection onStart={handleStart} />
             <FAQSection />
           </div>

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Shield, Scan, FileText, TrendingUp, Lock, Zap, ChevronDown, Info, AlertCircle, CheckCircle2 } from "lucide-react";
 import { LanguageContext } from "@/context/LanguageContext";
 
-export default function FeaturesSection() {
+export default function FeaturesSection({ onStart }) {
   const [expandedFeature, setExpandedFeature] = useState(null);
   const [showTechnical, setShowTechnical] = useState(false);
   const { language } = useContext(LanguageContext) || { language: 'en' };
@@ -207,7 +207,10 @@ export default function FeaturesSection() {
             <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
               {language === 'fr' ? 'Rejoignez des milliers d\'entreprises qui nous font confiance pour protéger leurs données' : 'Join thousands of companies that trust us to protect their data'}
             </p>
-            <button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-cyan-500/25">
+            <button 
+              onClick={onStart}
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-cyan-500/25"
+            >
               {language === 'fr' ? 'Commencer le scan gratuit' : 'Start free scan'}
             </button>
           </div>
