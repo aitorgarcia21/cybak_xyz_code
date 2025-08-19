@@ -1,13 +1,13 @@
 # CYBAK - Security Scanner
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Faitorgarcia21%2Fcybak_xyz_code&env=REACT_APP_SUPABASE_URL,REACT_APP_SUPABASE_ANON_KEY&envDescription=Get%20these%20values%20from%20your%20Supabase%20project%20settings&envLink=https%3A%2F%2Fapp.supabase.com%2Fproject%2F_%2Fsettings%2Fapi&project-name=cybak-security-scanner&repo-name=cybak-security-scanner)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/cybak-security-scanner)
 
 CYBAK est un scanner de sécurité web moderne. Cette application est construite avec Vite+React et utilise Supabase pour l'authentification et la base de données.
 
-## 🚀 Déploiement sur Vercel
+## 🚀 Déploiement sur Railway
 
 ### Prérequis
-- Compte [Vercel](https://vercel.com)
+- Compte [Railway](https://railway.app)
 - Compte [Supabase](https://supabase.com)
 
 ### Configuration des variables d'environnement
@@ -20,10 +20,10 @@ REACT_APP_SUPABASE_ANON_KEY=votre_cle_anonyme_supabase
 
 ### Déploiement automatique avec GitHub
 1. Poussez votre code sur un dépôt GitHub
-2. Connectez votre compte GitHub à Vercel
-3. Importez le projet dans Vercel
-4. Ajoutez les variables d'environnement dans les paramètres du projet Vercel
-5. Déclenchez un nouveau déploiement
+2. Connectez votre compte GitHub à Railway
+3. Importez le projet dans Railway
+4. Ajoutez les variables d'environnement dans les paramètres du projet Railway
+5. Le déploiement se fait automatiquement à chaque push
 
 ## 🛠 Développement local
 
@@ -43,7 +43,7 @@ npm run build
 ```
 
 ## 🔄 Déploiement continu
-Le projet est configuré pour le déploiement continu avec GitHub Actions. À chaque push sur la branche `main` ou `master`, le déploiement est automatiquement effectué sur Vercel.
+Le projet est configuré pour le déploiement continu avec Railway. À chaque push sur la branche `main` ou `master`, le déploiement est automatiquement effectué sur Railway.
 
 ## 📝 Licence
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus d'informations.
