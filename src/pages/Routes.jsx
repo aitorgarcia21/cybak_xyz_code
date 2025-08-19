@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@/context/AuthContext'
 import { LanguageProvider } from '@/context/LanguageContext'
 import ProtectedRoute from '@/components/ProtectedRoute'
+import AdminProtectedRoute from '@/components/AdminProtectedRoute'
 
 // Pages
 import IndexPage from './Index'
@@ -15,6 +16,7 @@ import Dashboard from './Dashboard'
 import Audit from './Audit'
 import AuditResults from './AuditResults'
 import Admin from './Admin'
+import AdminLogin from './AdminLogin'
 import Index from './Index'
 import Layout from './Layout'
 
@@ -57,10 +59,12 @@ export default function AppRoutes() {
             </ProtectedRoute>
           } />
           
+          {/* Admin routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={
-            <ProtectedRoute>
+            <AdminProtectedRoute>
               <Admin />
-            </ProtectedRoute>
+            </AdminProtectedRoute>
           } />
         </Routes>
       </Router>
