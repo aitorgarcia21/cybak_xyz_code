@@ -2,14 +2,33 @@
 logs
 *.log
 npm-debug.log*
+{{ ... }}
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build files
+dist/
+dist-ssr/
+build/
+.next/
+.nuxt/
+.nitro/
+.cache/
+.temp/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local development
 *.local
 
 # Editor directories and files
@@ -21,6 +40,8 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.swp
+*.swo
 
-.env
+# Vercel
+.vercel
