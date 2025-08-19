@@ -9,6 +9,10 @@ import { dirname } from 'path'
 import { createClient } from '@supabase/supabase-js'
 import securityMiddleware from './middleware/security.js'
 import Stripe from 'stripe'
+import sqlite3 from 'sqlite3'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_')
 
 const app = express()
@@ -25,7 +29,7 @@ app.use(helmet({
   contentSecurityPolicy: false, // On utilise notre propre CSP
   crossOriginEmbedderPolicy: false
 }))
-app.use(securityHeaders)
+app.use(securityMiddleware)
 
 // CORS configuration
 app.use(cors({
@@ -37,11 +41,20 @@ app.use(express.json({ limit: '10mb' }))
 app.use(express.raw({ type: 'application/json' }))
 
 // Servir les fichiers statiques (build Vite)
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 app.use(express.static(path.join(__dirname, 'dist')))
 
 // ===========================================
 // ROUTES API STRIPE
 // ===========================================
+
+// Rate limiter pour Stripe
+const stripeRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 requêtes par fenêtre
+  message: { error: 'Trop de tentatives, réessayez plus tard' }
+})
 
 // Créer une session de paiement Stripe (avec rate limiting)
 app.post('/api/create-checkout-session', stripeRateLimiter, async (req, res) => {
@@ -226,6 +239,188 @@ app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (
   }
 
   res.json({ received: true })
+})
+
+// ===========================================
+// ROUTES API AUTHENTIFICATION
+// ===========================================
+
+// Initialiser la base de données
+const initDatabase = () => {
+  const db = new sqlite3.Database('./cybak.db')
+  
+  db.serialize(() => {
+    db.run(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT UNIQUE NOT NULL,
+        password_hash TEXT NOT NULL,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        is_admin BOOLEAN DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `)
+  })
+  
+  db.close()
+}
+
+// Initialiser la DB au démarrage
+initDatabase()
+
+// Middleware d'authentification
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (!token) {
+    return res.status(401).json({ error: 'Token manquant' })
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET || 'cybak-secret-key', (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Token invalide' })
+    }
+    req.user = user
+    next()
+  })
+}
+
+// Route de connexion
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email et mot de passe requis' })
+    }
+
+    const db = new sqlite3.Database('./cybak.db')
+    
+    db.get('SELECT * FROM users WHERE email = ?', [email.toLowerCase()], async (err, user) => {
+      if (err) {
+        db.close()
+        return res.status(500).json({ error: 'Erreur serveur' })
+      }
+
+      if (!user) {
+        db.close()
+        return res.status(401).json({ error: 'Email ou mot de passe incorrect' })
+      }
+
+      const validPassword = await bcrypt.compare(password, user.password_hash)
+      
+      if (!validPassword) {
+        db.close()
+        return res.status(401).json({ error: 'Email ou mot de passe incorrect' })
+      }
+
+      const token = jwt.sign(
+        { 
+          userId: user.id, 
+          email: user.email,
+          isAdmin: user.is_admin 
+        },
+        process.env.JWT_SECRET || 'cybak-secret-key',
+        { expiresIn: '24h' }
+      )
+
+      db.close()
+
+      res.json({
+        token,
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          isAdmin: user.is_admin
+        }
+      })
+    })
+  } catch (error) {
+    console.error('Erreur login:', error)
+    res.status(500).json({ error: 'Erreur serveur' })
+  }
+})
+
+// Route d'inscription
+app.post('/api/auth/signup', async (req, res) => {
+  try {
+    const { email, password, firstName, lastName } = req.body
+
+    if (!email || !password || !firstName || !lastName) {
+      return res.status(400).json({ error: 'Tous les champs sont requis' })
+    }
+
+    const saltRounds = 12
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+    const db = new sqlite3.Database('./cybak.db')
+    
+    db.run(
+      'INSERT INTO users (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)',
+      [email.toLowerCase(), hashedPassword, firstName, lastName],
+      function(err) {
+        if (err) {
+          db.close()
+          if (err.code === 'SQLITE_CONSTRAINT') {
+            return res.status(409).json({ error: 'Email déjà utilisé' })
+          }
+          return res.status(500).json({ error: 'Erreur serveur' })
+        }
+
+        const token = jwt.sign(
+          { 
+            userId: this.lastID, 
+            email: email.toLowerCase(),
+            isAdmin: false 
+          },
+          process.env.JWT_SECRET || 'cybak-secret-key',
+          { expiresIn: '24h' }
+        )
+
+        db.close()
+
+        res.status(201).json({
+          token,
+          user: {
+            id: this.lastID,
+            email: email.toLowerCase(),
+            firstName,
+            lastName,
+            isAdmin: false
+          }
+        })
+      }
+    )
+  } catch (error) {
+    console.error('Erreur signup:', error)
+    res.status(500).json({ error: 'Erreur serveur' })
+  }
+})
+
+// Route pour obtenir l'utilisateur actuel
+app.get('/api/auth/me', authenticateToken, (req, res) => {
+  const db = new sqlite3.Database('./cybak.db')
+  
+  db.get('SELECT * FROM users WHERE id = ?', [req.user.userId], (err, user) => {
+    db.close()
+    
+    if (err || !user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' })
+    }
+
+    res.json({
+      id: user.id,
+      email: user.email,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      isAdmin: user.is_admin
+    })
+  })
 })
 
 // ===========================================
